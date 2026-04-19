@@ -1,0 +1,62 @@
+[
+  {
+    "id": "m31",
+    "name": "Andromeda Galaxy",
+    "ra": 10.6847,
+    "dec": 41.2687,
+    "fov": 3.0,
+    "rotation": 0,
+    "thumbnail": null,
+    "fullSizeUrl": null,
+    "metadata": {
+      "date": "2024-10-15",
+      "equipment": "Sky-Watcher 200P / EQ6-R Pro",
+      "exposure": "120x60s"
+    }
+  },
+  {
+    "id": "m42",
+    "name": "Orion Nebula",
+    "ra": 83.8221,
+    "dec": -5.3911,
+    "fov": 1.5,
+    "rotation": 0,
+    "thumbnail": null,
+    "fullSizeUrl": null,
+    "metadata": {
+      "date": "2024-12-22",
+      "equipment": "Sky-Watcher 200P / EQ6-R Pro",
+      "exposure": "60x120s"
+    }
+  },
+  {
+    "id": "m45",
+    "name": "Pleiades",
+    "ra": 56.601,
+    "dec": 24.1136,
+    "fov": 2.0,
+    "rotation": 0,
+    "thumbnail": null,
+    "fullSizeUrl": null,
+    "metadata": {
+      "date": "2024-11-10",
+      "equipment": "Sky-Watcher 200P / EQ6-R Pro",
+      "exposure": "90x60s"
+    }
+  },
+  {
+    "id": "ngc7000",
+    "name": "North America Nebula",
+    "ra": 314.6802,
+    "dec": 44.3654,
+    "fov": 4.0,
+    "rotation": 0,
+    "thumbnail": null,
+    "fullSizeUrl": null,
+    "metadata": {
+      "date": "2025-08-20",
+      "equipment": "Sky-Watcher 200P / EQ6-R Pro",
+      "exposure": "150x60s"
+    }
+  }
+]

@@ -5,12 +5,14 @@
   interface Props {
     photos: Photo[];
     projection?: string;
+    centerRA?: number;
     onselect?: (photo: Photo, position: { x: number; y: number }) => void;
   }
 
-  let { photos, projection = 'equirectangular', onselect }: Props = $props();
+  let { photos, projection = 'equirectangular', centerRA = 0, onselect }: Props = $props();
   let celestialInstance: any = null;
   let prevProjection: string | undefined;
+  let prevCenterRA: number | undefined;
 
   function currentProjection(coords: [number, number]): [number, number] | null {
     return celestialInstance?.map?.projection()(coords) ?? null;
@@ -49,7 +51,7 @@
       width: 0,
       projection: projection,
       transform: 'equatorial',
-      center: [0, 0, 0],
+      center: [centerRA * 15, 0, 0],
       follow: 'center',
       orientationfixed: true,
       zoomlevel: null,
@@ -200,9 +202,16 @@
     });
   });
 
+  function applyCenter(ra: number) {
+    const raDegs = ra * 15;
+    celestialInstance.apply({ center: [raDegs, 0, 0] });
+    celestialInstance.map.projection().rotate([-raDegs, 0, 0]);
+    celestialInstance.redraw();
+  }
+
   export function resetCenter() {
     if (celestialInstance) {
-      celestialInstance.rotate({ center: [0, 0, 0] });
+      celestialInstance.rotate({ center: [centerRA * 15, 0, 0] });
     }
   }
 
@@ -212,6 +221,15 @@
         celestialInstance.reproject({ projection });
       }
       prevProjection = projection;
+    }
+  });
+
+  $effect(() => {
+    if (celestialInstance && centerRA !== undefined) {
+      if (prevCenterRA !== undefined && prevCenterRA !== centerRA) {
+        applyCenter(centerRA);
+      }
+      prevCenterRA = centerRA;
     }
   });
 </script>

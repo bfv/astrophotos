@@ -1,62 +1,1007 @@
 [
   {
-    "id": "m31",
-    "name": "Andromeda Galaxy",
-    "ra": 10.6847,
-    "dec": 41.2687,
-    "fov": 3.0,
+    "id": "1",
+    "name": "GammaCygni",
+    "ra": 306.4000545852386,
+    "dec": 40.32373932257645,
+    "fov": 0,
     "rotation": 0,
     "thumbnail": null,
     "fullSizeUrl": null,
     "metadata": {
-      "date": "2024-10-15",
-      "equipment": "Sky-Watcher 200P / EQ6-R Pro",
-      "exposure": "120x60s"
+      "date": null,
+      "equipment": null,
+      "exposure": null
     }
   },
   {
-    "id": "m42",
-    "name": "Orion Nebula",
-    "ra": 83.8221,
-    "dec": -5.3911,
-    "fov": 1.5,
+    "id": "2",
+    "name": "IC1396",
+    "ra": 324.07558490516163,
+    "dec": 57.69540806869528,
+    "fov": 0,
     "rotation": 0,
     "thumbnail": null,
     "fullSizeUrl": null,
     "metadata": {
-      "date": "2024-12-22",
-      "equipment": "Sky-Watcher 200P / EQ6-R Pro",
-      "exposure": "60x120s"
+      "date": null,
+      "equipment": null,
+      "exposure": null
     }
   },
   {
-    "id": "m45",
-    "name": "Pleiades",
-    "ra": 56.601,
-    "dec": 24.1136,
-    "fov": 2.0,
+    "id": "7",
+    "name": "IC1805",
+    "ra": 38.90182699443052,
+    "dec": 61.451670275314214,
+    "fov": 0,
     "rotation": 0,
     "thumbnail": null,
     "fullSizeUrl": null,
     "metadata": {
-      "date": "2024-11-10",
-      "equipment": "Sky-Watcher 200P / EQ6-R Pro",
-      "exposure": "90x60s"
+      "date": null,
+      "equipment": null,
+      "exposure": null
     }
   },
   {
-    "id": "ngc7000",
-    "name": "North America Nebula",
-    "ra": 314.6802,
-    "dec": 44.3654,
-    "fov": 4.0,
+    "id": "8",
+    "name": "IC1848",
+    "ra": 44.77980659329756,
+    "dec": 60.546551793808746,
+    "fov": 0,
     "rotation": 0,
     "thumbnail": null,
     "fullSizeUrl": null,
     "metadata": {
-      "date": "2025-08-20",
-      "equipment": "Sky-Watcher 200P / EQ6-R Pro",
-      "exposure": "150x60s"
+      "date": null,
+      "equipment": null,
+      "exposure": null
+    }
+  },
+  {
+    "id": "11",
+    "name": "IC342",
+    "ra": 56.714250811749906,
+    "dec": 68.08383332559713,
+    "fov": 0,
+    "rotation": 0,
+    "thumbnail": null,
+    "fullSizeUrl": null,
+    "metadata": {
+      "date": null,
+      "equipment": null,
+      "exposure": null
+    }
+  },
+  {
+    "id": "12",
+    "name": "IC405",
+    "ra": 79.46355833333332,
+    "dec": 34.319744444444446,
+    "fov": 0,
+    "rotation": 0,
+    "thumbnail": null,
+    "fullSizeUrl": null,
+    "metadata": {
+      "date": null,
+      "equipment": null,
+      "exposure": null
+    }
+  },
+  {
+    "id": "13",
+    "name": "IC434",
+    "ra": 85.33573888871604,
+    "dec": -2.1584073443702865,
+    "fov": 0,
+    "rotation": 0,
+    "thumbnail": null,
+    "fullSizeUrl": null,
+    "metadata": {
+      "date": null,
+      "equipment": null,
+      "exposure": null
+    }
+  },
+  {
+    "id": "14",
+    "name": "IC443",
+    "ra": 94.12304503485797,
+    "dec": 22.48151034489243,
+    "fov": 0,
+    "rotation": 0,
+    "thumbnail": null,
+    "fullSizeUrl": null,
+    "metadata": {
+      "date": null,
+      "equipment": null,
+      "exposure": null
+    }
+  },
+  {
+    "id": "15",
+    "name": "IC5068",
+    "ra": 312.66187210018927,
+    "dec": 42.536389679335436,
+    "fov": 0,
+    "rotation": 0,
+    "thumbnail": null,
+    "fullSizeUrl": null,
+    "metadata": {
+      "date": null,
+      "equipment": null,
+      "exposure": null
+    }
+  },
+  {
+    "id": "16",
+    "name": "IC5070",
+    "ra": 312.97226470588237,
+    "dec": 44.484870588235296,
+    "fov": 0,
+    "rotation": 0,
+    "thumbnail": null,
+    "fullSizeUrl": null,
+    "metadata": {
+      "date": null,
+      "equipment": null,
+      "exposure": null
+    }
+  },
+  {
+    "id": "17",
+    "name": "IC5146",
+    "ra": 328.5947983425414,
+    "dec": 47.395318232044204,
+    "fov": 0,
+    "rotation": 0,
+    "thumbnail": null,
+    "fullSizeUrl": null,
+    "metadata": {
+      "date": null,
+      "equipment": null,
+      "exposure": null
+    }
+  },
+  {
+    "id": "18",
+    "name": "Jones-Emberson1",
+    "ra": 119.49437236433327,
+    "dec": 53.425487345951915,
+    "fov": 0,
+    "rotation": 0,
+    "thumbnail": null,
+    "fullSizeUrl": null,
+    "metadata": {
+      "date": null,
+      "equipment": null,
+      "exposure": null
+    }
+  },
+  {
+    "id": "19",
+    "name": "Leo Triplets",
+    "ra": 170.277825,
+    "dec": 13.137305833333333,
+    "fov": 0,
+    "rotation": 0,
+    "thumbnail": null,
+    "fullSizeUrl": null,
+    "metadata": {
+      "date": null,
+      "equipment": null,
+      "exposure": null
+    }
+  },
+  {
+    "id": "20",
+    "name": "M1",
+    "ra": 83.73353963662268,
+    "dec": 22.05957844926762,
+    "fov": 0,
+    "rotation": 0,
+    "thumbnail": null,
+    "fullSizeUrl": null,
+    "metadata": {
+      "date": null,
+      "equipment": null,
+      "exposure": null
+    }
+  },
+  {
+    "id": "21",
+    "name": "M101",
+    "ra": 211.08082207796465,
+    "dec": 54.46212184363378,
+    "fov": 0,
+    "rotation": 0,
+    "thumbnail": null,
+    "fullSizeUrl": null,
+    "metadata": {
+      "date": null,
+      "equipment": null,
+      "exposure": null
+    }
+  },
+  {
+    "id": "23",
+    "name": "M106",
+    "ra": 184.7219145100407,
+    "dec": 47.344904209251055,
+    "fov": 0,
+    "rotation": 0,
+    "thumbnail": null,
+    "fullSizeUrl": null,
+    "metadata": {
+      "date": null,
+      "equipment": null,
+      "exposure": null
+    }
+  },
+  {
+    "id": "24",
+    "name": "M108",
+    "ra": 167.8905717104764,
+    "dec": 55.674381720167595,
+    "fov": 0,
+    "rotation": 0,
+    "thumbnail": null,
+    "fullSizeUrl": null,
+    "metadata": {
+      "date": null,
+      "equipment": null,
+      "exposure": null
+    }
+  },
+  {
+    "id": "25",
+    "name": "M13",
+    "ra": 250.42296650974444,
+    "dec": 36.451090661099585,
+    "fov": 0,
+    "rotation": 0,
+    "thumbnail": null,
+    "fullSizeUrl": null,
+    "metadata": {
+      "date": null,
+      "equipment": null,
+      "exposure": null
+    }
+  },
+  {
+    "id": "26",
+    "name": "M3",
+    "ra": 205.54712226711354,
+    "dec": 28.337159389224336,
+    "fov": 0,
+    "rotation": 0,
+    "thumbnail": null,
+    "fullSizeUrl": null,
+    "metadata": {
+      "date": null,
+      "equipment": null,
+      "exposure": null
+    }
+  },
+  {
+    "id": "27",
+    "name": "M31",
+    "ra": 10.432536209214385,
+    "dec": 41.287683000200815,
+    "fov": 0,
+    "rotation": 0,
+    "thumbnail": null,
+    "fullSizeUrl": null,
+    "metadata": {
+      "date": null,
+      "equipment": null,
+      "exposure": null
+    }
+  },
+  {
+    "id": "31",
+    "name": "M33",
+    "ra": 23.551228468344267,
+    "dec": 30.71518537491688,
+    "fov": 0,
+    "rotation": 0,
+    "thumbnail": null,
+    "fullSizeUrl": null,
+    "metadata": {
+      "date": null,
+      "equipment": null,
+      "exposure": null
+    }
+  },
+  {
+    "id": "32",
+    "name": "M39",
+    "ra": 323.23675,
+    "dec": 48.58826333333333,
+    "fov": 0,
+    "rotation": 0,
+    "thumbnail": null,
+    "fullSizeUrl": null,
+    "metadata": {
+      "date": null,
+      "equipment": null,
+      "exposure": null
+    }
+  },
+  {
+    "id": "33",
+    "name": "M42",
+    "ra": 84.12739900990098,
+    "dec": -5.372864653465346,
+    "fov": 0,
+    "rotation": 0,
+    "thumbnail": null,
+    "fullSizeUrl": null,
+    "metadata": {
+      "date": null,
+      "equipment": null,
+      "exposure": null
+    }
+  },
+  {
+    "id": "34",
+    "name": "M45",
+    "ra": 57.108134117647054,
+    "dec": 24.231270588235294,
+    "fov": 0,
+    "rotation": 0,
+    "thumbnail": null,
+    "fullSizeUrl": null,
+    "metadata": {
+      "date": null,
+      "equipment": null,
+      "exposure": null
+    }
+  },
+  {
+    "id": "36",
+    "name": "M51",
+    "ra": 202.53246616592708,
+    "dec": 47.14513496948429,
+    "fov": 0,
+    "rotation": 0,
+    "thumbnail": null,
+    "fullSizeUrl": null,
+    "metadata": {
+      "date": null,
+      "equipment": null,
+      "exposure": null
+    }
+  },
+  {
+    "id": "37",
+    "name": "M53",
+    "ra": 198.21087876321633,
+    "dec": 18.180068502874136,
+    "fov": 0,
+    "rotation": 0,
+    "thumbnail": null,
+    "fullSizeUrl": null,
+    "metadata": {
+      "date": null,
+      "equipment": null,
+      "exposure": null
+    }
+  },
+  {
+    "id": "38",
+    "name": "M56",
+    "ra": 289.39085,
+    "dec": 30.242576666666665,
+    "fov": 0,
+    "rotation": 0,
+    "thumbnail": null,
+    "fullSizeUrl": null,
+    "metadata": {
+      "date": null,
+      "equipment": null,
+      "exposure": null
+    }
+  },
+  {
+    "id": "39",
+    "name": "M57",
+    "ra": 283.6716,
+    "dec": 33.0351775,
+    "fov": 0,
+    "rotation": 0,
+    "thumbnail": null,
+    "fullSizeUrl": null,
+    "metadata": {
+      "date": null,
+      "equipment": null,
+      "exposure": null
+    }
+  },
+  {
+    "id": "40",
+    "name": "M63",
+    "ra": 198.96255911532748,
+    "dec": 42.02700356366868,
+    "fov": 0,
+    "rotation": 0,
+    "thumbnail": null,
+    "fullSizeUrl": null,
+    "metadata": {
+      "date": null,
+      "equipment": null,
+      "exposure": null
+    }
+  },
+  {
+    "id": "41",
+    "name": "M81",
+    "ra": 149.71584871348048,
+    "dec": 69.14762073618407,
+    "fov": 0,
+    "rotation": 0,
+    "thumbnail": null,
+    "fullSizeUrl": null,
+    "metadata": {
+      "date": null,
+      "equipment": null,
+      "exposure": null
+    }
+  },
+  {
+    "id": "43",
+    "name": "M92",
+    "ra": 259.27662209302326,
+    "dec": 43.30516279069768,
+    "fov": 0,
+    "rotation": 0,
+    "thumbnail": null,
+    "fullSizeUrl": null,
+    "metadata": {
+      "date": null,
+      "equipment": null,
+      "exposure": null
+    }
+  },
+  {
+    "id": "44",
+    "name": "M94",
+    "ra": 192.72764215362074,
+    "dec": 41.122547651052045,
+    "fov": 0,
+    "rotation": 0,
+    "thumbnail": null,
+    "fullSizeUrl": null,
+    "metadata": {
+      "date": null,
+      "equipment": null,
+      "exposure": null
+    }
+  },
+  {
+    "id": "45",
+    "name": "M97",
+    "ra": 168.71769506695634,
+    "dec": 55.02085878601585,
+    "fov": 0,
+    "rotation": 0,
+    "thumbnail": null,
+    "fullSizeUrl": null,
+    "metadata": {
+      "date": null,
+      "equipment": null,
+      "exposure": null
+    }
+  },
+  {
+    "id": "48",
+    "name": "Markarians Chain",
+    "ra": 187.08275,
+    "dec": 12.894541666666667,
+    "fov": 0,
+    "rotation": 0,
+    "thumbnail": null,
+    "fullSizeUrl": null,
+    "metadata": {
+      "date": null,
+      "equipment": null,
+      "exposure": null
+    }
+  },
+  {
+    "id": "49",
+    "name": "NGC1893",
+    "ra": 81.04185,
+    "dec": 33.439918181818186,
+    "fov": 0,
+    "rotation": 0,
+    "thumbnail": null,
+    "fullSizeUrl": null,
+    "metadata": {
+      "date": null,
+      "equipment": null,
+      "exposure": null
+    }
+  },
+  {
+    "id": "51",
+    "name": "NGC2244",
+    "ra": 98.391865,
+    "dec": 4.823672666666667,
+    "fov": 0,
+    "rotation": 0,
+    "thumbnail": null,
+    "fullSizeUrl": null,
+    "metadata": {
+      "date": null,
+      "equipment": null,
+      "exposure": null
+    }
+  },
+  {
+    "id": "52",
+    "name": "NGC2357",
+    "ra": 109.42939973856608,
+    "dec": 23.36795947669128,
+    "fov": 0,
+    "rotation": 0,
+    "thumbnail": null,
+    "fullSizeUrl": null,
+    "metadata": {
+      "date": null,
+      "equipment": null,
+      "exposure": null
+    }
+  },
+  {
+    "id": "53",
+    "name": "NGC2403",
+    "ra": 114.78811,
+    "dec": 65.51888,
+    "fov": 0,
+    "rotation": 0,
+    "thumbnail": null,
+    "fullSizeUrl": null,
+    "metadata": {
+      "date": null,
+      "equipment": null,
+      "exposure": null
+    }
+  },
+  {
+    "id": "54",
+    "name": "NGC281",
+    "ra": 13.415452385162686,
+    "dec": 56.6098370845451,
+    "fov": 0,
+    "rotation": 0,
+    "thumbnail": null,
+    "fullSizeUrl": null,
+    "metadata": {
+      "date": null,
+      "equipment": null,
+      "exposure": null
+    }
+  },
+  {
+    "id": "55",
+    "name": "NGC2903",
+    "ra": 143.0525755391787,
+    "dec": 21.493737507389216,
+    "fov": 0,
+    "rotation": 0,
+    "thumbnail": null,
+    "fullSizeUrl": null,
+    "metadata": {
+      "date": null,
+      "equipment": null,
+      "exposure": null
+    }
+  },
+  {
+    "id": "56",
+    "name": "NGC4274",
+    "ra": 185.02049985340787,
+    "dec": 29.724170329335927,
+    "fov": 0,
+    "rotation": 0,
+    "thumbnail": null,
+    "fullSizeUrl": null,
+    "metadata": {
+      "date": null,
+      "equipment": null,
+      "exposure": null
+    }
+  },
+  {
+    "id": "57",
+    "name": "NGC4565",
+    "ra": 189.07637917623356,
+    "dec": 25.99933668944859,
+    "fov": 0,
+    "rotation": 0,
+    "thumbnail": null,
+    "fullSizeUrl": null,
+    "metadata": {
+      "date": null,
+      "equipment": null,
+      "exposure": null
+    }
+  },
+  {
+    "id": "58",
+    "name": "NGC4884",
+    "ra": 195.02474299342938,
+    "dec": 27.99627792717638,
+    "fov": 0,
+    "rotation": 0,
+    "thumbnail": null,
+    "fullSizeUrl": null,
+    "metadata": {
+      "date": null,
+      "equipment": null,
+      "exposure": null
+    }
+  },
+  {
+    "id": "59",
+    "name": "NGC5033",
+    "ra": 198.31464,
+    "dec": 36.572734,
+    "fov": 0,
+    "rotation": 0,
+    "thumbnail": null,
+    "fullSizeUrl": null,
+    "metadata": {
+      "date": null,
+      "equipment": null,
+      "exposure": null
+    }
+  },
+  {
+    "id": "60",
+    "name": "NGC6543",
+    "ra": 269.64967638916403,
+    "dec": 66.65193700993798,
+    "fov": 0,
+    "rotation": 0,
+    "thumbnail": null,
+    "fullSizeUrl": null,
+    "metadata": {
+      "date": null,
+      "equipment": null,
+      "exposure": null
+    }
+  },
+  {
+    "id": "61",
+    "name": "NGC6791",
+    "ra": 290.2529763828331,
+    "dec": 37.748663227325906,
+    "fov": 0,
+    "rotation": 0,
+    "thumbnail": null,
+    "fullSizeUrl": null,
+    "metadata": {
+      "date": null,
+      "equipment": null,
+      "exposure": null
+    }
+  },
+  {
+    "id": "62",
+    "name": "NGC6888",
+    "ra": 303.1523649503352,
+    "dec": 38.557566296988156,
+    "fov": 0,
+    "rotation": 0,
+    "thumbnail": null,
+    "fullSizeUrl": null,
+    "metadata": {
+      "date": null,
+      "equipment": null,
+      "exposure": null
+    }
+  },
+  {
+    "id": "67",
+    "name": "NGC6939",
+    "ra": 308.43245454545456,
+    "dec": 60.43118254545454,
+    "fov": 0,
+    "rotation": 0,
+    "thumbnail": null,
+    "fullSizeUrl": null,
+    "metadata": {
+      "date": null,
+      "equipment": null,
+      "exposure": null
+    }
+  },
+  {
+    "id": "68",
+    "name": "NGC6946",
+    "ra": 308.6809944665472,
+    "dec": 60.25979009951112,
+    "fov": 0,
+    "rotation": 0,
+    "thumbnail": null,
+    "fullSizeUrl": null,
+    "metadata": {
+      "date": null,
+      "equipment": null,
+      "exposure": null
+    }
+  },
+  {
+    "id": "69",
+    "name": "NGC6992",
+    "ra": 314.24578125,
+    "dec": 31.505609375000002,
+    "fov": 0,
+    "rotation": 0,
+    "thumbnail": null,
+    "fullSizeUrl": null,
+    "metadata": {
+      "date": null,
+      "equipment": null,
+      "exposure": null
+    }
+  },
+  {
+    "id": "70",
+    "name": "NGC6995",
+    "ra": 314.1850625,
+    "dec": 31.50690416666667,
+    "fov": 0,
+    "rotation": 0,
+    "thumbnail": null,
+    "fullSizeUrl": null,
+    "metadata": {
+      "date": null,
+      "equipment": null,
+      "exposure": null
+    }
+  },
+  {
+    "id": "71",
+    "name": "NGC7000",
+    "ra": 314.69746875,
+    "dec": 43.88369375,
+    "fov": 0,
+    "rotation": 0,
+    "thumbnail": null,
+    "fullSizeUrl": null,
+    "metadata": {
+      "date": null,
+      "equipment": null,
+      "exposure": null
+    }
+  },
+  {
+    "id": "72",
+    "name": "NGC7023",
+    "ra": 315.4687721081228,
+    "dec": 68.2296398352607,
+    "fov": 0,
+    "rotation": 0,
+    "thumbnail": null,
+    "fullSizeUrl": null,
+    "metadata": {
+      "date": null,
+      "equipment": null,
+      "exposure": null
+    }
+  },
+  {
+    "id": "75",
+    "name": "NGC7635",
+    "ra": 350.15341396062405,
+    "dec": 61.20025798778029,
+    "fov": 0,
+    "rotation": 0,
+    "thumbnail": null,
+    "fullSizeUrl": null,
+    "metadata": {
+      "date": null,
+      "equipment": null,
+      "exposure": null
+    }
+  },
+  {
+    "id": "76",
+    "name": "NGC7640",
+    "ra": 350.5370139799444,
+    "dec": 40.859106965195174,
+    "fov": 0,
+    "rotation": 0,
+    "thumbnail": null,
+    "fullSizeUrl": null,
+    "metadata": {
+      "date": null,
+      "equipment": null,
+      "exposure": null
+    }
+  },
+  {
+    "id": "77",
+    "name": "NGC7822",
+    "ra": 0.7956809516231266,
+    "dec": 67.21146310181166,
+    "fov": 0,
+    "rotation": 0,
+    "thumbnail": null,
+    "fullSizeUrl": null,
+    "metadata": {
+      "date": null,
+      "equipment": null,
+      "exposure": null
+    }
+  },
+  {
+    "id": "78",
+    "name": "NGC891",
+    "ra": 35.6965033640687,
+    "dec": 42.3711822056237,
+    "fov": 0,
+    "rotation": 0,
+    "thumbnail": null,
+    "fullSizeUrl": null,
+    "metadata": {
+      "date": null,
+      "equipment": null,
+      "exposure": null
+    }
+  },
+  {
+    "id": "81",
+    "name": "SH2-101",
+    "ra": 299.97028681066547,
+    "dec": 35.332227459762905,
+    "fov": 0,
+    "rotation": 0,
+    "thumbnail": null,
+    "fullSizeUrl": null,
+    "metadata": {
+      "date": null,
+      "equipment": null,
+      "exposure": null
+    }
+  },
+  {
+    "id": "82",
+    "name": "SH2-155",
+    "ra": 344.15092925635867,
+    "dec": 62.48138348834568,
+    "fov": 0,
+    "rotation": 0,
+    "thumbnail": null,
+    "fullSizeUrl": null,
+    "metadata": {
+      "date": null,
+      "equipment": null,
+      "exposure": null
+    }
+  },
+  {
+    "id": "83",
+    "name": "Sh2-129",
+    "ra": 318.7240766011415,
+    "dec": 59.72511748621794,
+    "fov": 0,
+    "rotation": 0,
+    "thumbnail": null,
+    "fullSizeUrl": null,
+    "metadata": {
+      "date": null,
+      "equipment": null,
+      "exposure": null
+    }
+  },
+  {
+    "id": "86",
+    "name": "StephansQuintet",
+    "ra": 339.0088629224065,
+    "dec": 33.9710092490812,
+    "fov": 0,
+    "rotation": 0,
+    "thumbnail": null,
+    "fullSizeUrl": null,
+    "metadata": {
+      "date": null,
+      "equipment": null,
+      "exposure": null
+    }
+  },
+  {
+    "id": "87",
+    "name": "T_CrB",
+    "ra": 239.87873573875152,
+    "dec": 25.924049493939634,
+    "fov": 0,
+    "rotation": 0,
+    "thumbnail": null,
+    "fullSizeUrl": null,
+    "metadata": {
+      "date": null,
+      "equipment": null,
+      "exposure": null
+    }
+  },
+  {
+    "id": "88",
+    "name": "Veil Nebula",
+    "ra": 311.8188081917427,
+    "dec": 31.552976334001055,
+    "fov": 0,
+    "rotation": 0,
+    "thumbnail": null,
+    "fullSizeUrl": null,
+    "metadata": {
+      "date": null,
+      "equipment": null,
+      "exposure": null
+    }
+  },
+  {
+    "id": "90",
+    "name": "WeBo1",
+    "ra": 40.185959243796404,
+    "dec": 61.16359494211969,
+    "fov": 0,
+    "rotation": 0,
+    "thumbnail": null,
+    "fullSizeUrl": null,
+    "metadata": {
+      "date": null,
+      "equipment": null,
+      "exposure": null
+    }
+  },
+  {
+    "id": "92",
+    "name": "caldwell9",
+    "ra": 344.11258417563266,
+    "dec": 62.513175373570334,
+    "fov": 0,
+    "rotation": 0,
+    "thumbnail": null,
+    "fullSizeUrl": null,
+    "metadata": {
+      "date": null,
+      "equipment": null,
+      "exposure": null
+    }
+  },
+  {
+    "id": "93",
+    "name": "keenan",
+    "ra": 203.2269334896526,
+    "dec": 62.38471553262516,
+    "fov": 0,
+    "rotation": 0,
+    "thumbnail": null,
+    "fullSizeUrl": null,
+    "metadata": {
+      "date": null,
+      "equipment": null,
+      "exposure": null
+    }
+  },
+  {
+    "id": "94",
+    "name": "mizar-alcor",
+    "ra": 201.11207055733198,
+    "dec": 54.95167807330477,
+    "fov": 0,
+    "rotation": 0,
+    "thumbnail": null,
+    "fullSizeUrl": null,
+    "metadata": {
+      "date": null,
+      "equipment": null,
+      "exposure": null
     }
   }
 ]

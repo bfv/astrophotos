@@ -4,10 +4,17 @@
 
   interface Props {
     photos: Photo[];
+    projection?: string;
     onselect?: (photo: Photo, position: { x: number; y: number }) => void;
   }
 
-  let { photos, onselect }: Props = $props();
+  let { photos, projection = 'equirectangular', onselect }: Props = $props();
+  let celestialInstance: any = null;
+  let prevProjection: string | undefined;
+
+  function currentProjection(coords: [number, number]): [number, number] | null {
+    return celestialInstance?.map?.projection()(coords) ?? null;
+  }
 
   let mapContainer: HTMLDivElement;
 
@@ -40,9 +47,10 @@
 
     const config = {
       width: 0,
-      projection: 'equirectangular',
+      projection: projection,
       transform: 'equatorial',
       center: [0, 0, 0],
+      follow: 'center',
       orientationfixed: true,
       zoomlevel: null,
       zoomextend: 10,
@@ -97,8 +105,8 @@
           stroke: '#cccccc',
           width: 0.6,
           opacity: 0.8,
-          lon: { pos: [''], fill: '#eee', font: '10px Helvetica, Arial, sans-serif' },
-          lat: { pos: [''], fill: '#eee', font: '10px Helvetica, Arial, sans-serif' }
+          lon: { pos: ['center'], fill: '#eee', font: '10px Helvetica, Arial, sans-serif' },
+          lat: { pos: ['center'], fill: '#eee', font: '10px Helvetica, Arial, sans-serif' }
         },
         equatorial: { show: true, stroke: '#aaaaaa', width: 1.3, opacity: 0.7 },
         ecliptic: { show: true, stroke: '#66cc66', width: 1.3, opacity: 0.7 },
@@ -120,11 +128,10 @@
       callback: (error: any) => {
         if (error) return console.error(error);
         const canvas = Celestial.context;
-        const map = Celestial.map;
 
         photoGeoJSON.features.forEach((feature: any) => {
           const coords = feature.geometry.coordinates;
-          const point = Celestial.mapProjection(coords);
+          const point = currentProjection(coords);
 
           if (point === null) return;
           if (!Celestial.clip(feature.geometry.coordinates)) return;
@@ -148,7 +155,7 @@
 
         photoGeoJSON.features.forEach((feature: any) => {
           const coords = feature.geometry.coordinates;
-          const point = Celestial.mapProjection(coords);
+          const point = currentProjection(coords);
 
           if (point === null) return;
           if (!Celestial.clip(feature.geometry.coordinates)) return;
@@ -169,6 +176,7 @@
       }
     });
 
+    celestialInstance = Celestial;
     Celestial.display(config);
 
     // Click handling for markers
@@ -180,7 +188,7 @@
       const y = e.clientY - rect.top;
 
       for (const photo of photos) {
-        const point = Celestial.mapProjection([photo.ra, photo.dec]);
+        const point = currentProjection([photo.ra, photo.dec]);
         if (point === null) continue;
         const dx = point[0] - x;
         const dy = point[1] - y;
@@ -190,6 +198,21 @@
         }
       }
     });
+  });
+
+  export function resetCenter() {
+    if (celestialInstance) {
+      celestialInstance.rotate({ center: [0, 0, 0] });
+    }
+  }
+
+  $effect(() => {
+    if (celestialInstance && projection) {
+      if (prevProjection !== undefined && prevProjection !== projection) {
+        celestialInstance.reproject({ projection });
+      }
+      prevProjection = projection;
+    }
   });
 </script>
 

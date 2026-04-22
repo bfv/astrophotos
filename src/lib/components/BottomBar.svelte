@@ -7,6 +7,7 @@
 </script>
 
 <footer class="bottombar">
+  <a class="bottombar-repo" href="https://github.com/bfv/astrophotos" target="_blank" rel="noopener noreferrer">github.com/bfv/astrophotos</a>
   <span class="bottombar-info">{photoCount} photo{photoCount !== 1 ? 's' : ''} loaded</span>
 </footer>
 
@@ -22,6 +23,16 @@
     font-family: system-ui, sans-serif;
     font-size: 12px;
     flex-shrink: 0;
+  }
+
+  .bottombar-repo {
+    color: #888;
+    text-decoration: none;
+  }
+
+  .bottombar-repo:hover {
+    color: #aaa;
+    text-decoration: underline;
   }
 
   .bottombar-info {

@@ -10,7 +10,10 @@
 </script>
 
 <header class="topbar">
-  <span class="topbar-title">{title}</span>
+  <div class="topbar-left">
+    <img src="/images/logo_32px.png" alt="logo" class="topbar-logo" />
+    <span class="topbar-title">{title}</span>
+  </div>
   <div class="topbar-controls">
     {#if children}{@render children()}{/if}
   </div>
@@ -28,6 +31,17 @@
     color: #e0e0e0;
     font-family: system-ui, sans-serif;
     flex-shrink: 0;
+  }
+
+  .topbar-left {
+    display: flex;
+    align-items: center;
+  }
+
+  .topbar-logo {
+    height: 32px;
+    width: 32px;
+    margin-right: 8px;
   }
 
   .topbar-title {

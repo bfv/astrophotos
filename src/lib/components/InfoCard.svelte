@@ -11,6 +11,21 @@
 
   let { photo, position = null, onclose, children }: Props = $props();
 
+  function formatRA(deg: number): string {
+    const totalH = deg / 15;
+    const h = Math.floor(totalH);
+    const m = ((totalH - h) * 60).toFixed(1);
+    return `${h}h ${m}m`;
+  }
+
+  function formatDec(deg: number): string {
+    const sign = deg < 0 ? '-' : '+';
+    const abs = Math.abs(deg);
+    const d = Math.floor(abs);
+    const m = ((abs - d) * 60).toFixed(1);
+    return `${sign}${d}° ${m}'`;
+  }
+
   let cardStyle = $derived.by(() => {
     if (!position) return '';
     const cardW = 280;
@@ -55,6 +70,10 @@
 
     <div class="infocard-body">
       <h3 class="infocard-name">{photo.name}</h3>
+      <dl class="infocard-meta">
+        <dt>RA</dt><dd>{formatRA(photo.ra)}</dd>
+        <dt>Dec</dt><dd>{formatDec(photo.dec)}</dd>
+      </dl>
       {#if photo.metadata}
         <dl class="infocard-meta">
           {#if photo.metadata.date}

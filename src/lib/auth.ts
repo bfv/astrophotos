@@ -2,9 +2,15 @@ import { UserManager, type User } from 'oidc-client-ts';
 import { writable, derived } from 'svelte/store';
 import { browser } from '$app/environment';
 
+declare global {
+  interface Window {
+    __APP_CONFIG__: { authAuthority: string; authClientId: string };
+  }
+}
+
 const config = {
-  authority: 'https://keycloak.bfv.io/realms/astrophotos',
-  client_id: 'website',
+  authority: browser ? window.__APP_CONFIG__.authAuthority : '',
+  client_id: browser ? window.__APP_CONFIG__.authClientId : '',
   redirect_uri: browser ? `${window.location.origin}/callback` : '',
   scope: 'openid profile email',
   response_type: 'code',

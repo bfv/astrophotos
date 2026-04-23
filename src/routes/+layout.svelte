@@ -1,5 +1,12 @@
 <script lang="ts">
+	import { onMount } from 'svelte';
+	import { initAuth } from '$lib/auth';
+
 	let { children } = $props();
+
+	onMount(() => {
+		initAuth();
+	});
 </script>
 
 <div class="app-layout">

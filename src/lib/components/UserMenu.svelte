@@ -1,5 +1,5 @@
 <script lang="ts">
-  import LoginDialog from './LoginDialog.svelte';
+  import { user, isLoggedIn, login, logout } from '$lib/auth';
 
   interface Props {
     children?: import('svelte').Snippet;
@@ -7,29 +7,19 @@
 
   let { children }: Props = $props();
 
-  let isLoggedIn = $state(false);
-  let username = $state('');
   let menuOpen = $state(false);
-  let loginDialogOpen = $state(false);
 
   function handleButtonClick() {
-    if (isLoggedIn) {
+    if ($isLoggedIn) {
       menuOpen = !menuOpen;
     } else {
-      loginDialogOpen = true;
+      login();
     }
   }
 
-  function handleLogin(name: string) {
-    isLoggedIn = true;
-    username = name;
-    loginDialogOpen = false;
-  }
-
   function handleLogout() {
-    isLoggedIn = false;
-    username = '';
     menuOpen = false;
+    logout();
   }
 
   function handleBlur(e: FocusEvent) {
@@ -38,17 +28,19 @@
       menuOpen = false;
     }
   }
+
+  const displayName = $derived($user?.profile?.preferred_username ?? $user?.profile?.name ?? 'Gebruiker');
 </script>
 
 <div class="usermenu" onblur={handleBlur}>
   <button
     class="usermenu-btn"
-    class:usermenu-btn--loggedin={isLoggedIn}
+    class:usermenu-btn--loggedin={$isLoggedIn}
     onclick={handleButtonClick}
-    aria-label={isLoggedIn ? 'Gebruikersmenu' : 'Inloggen'}
-    aria-expanded={isLoggedIn ? menuOpen : undefined}
+    aria-label={$isLoggedIn ? 'Gebruikersmenu' : 'Inloggen'}
+    aria-expanded={$isLoggedIn ? menuOpen : undefined}
   >
-    {#if isLoggedIn}
+    {#if $isLoggedIn}
       <!-- logged in: filled person circle -->
       <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
         <circle cx="12" cy="12" r="10" fill="#3a3aaf" />
@@ -64,18 +56,14 @@
     {/if}
   </button>
 
-  {#if isLoggedIn && menuOpen}
+  {#if $isLoggedIn && menuOpen}
     <div class="usermenu-dropdown">
-      <div class="usermenu-username">{username}</div>
+      <div class="usermenu-username">{displayName}</div>
       {#if children}{@render children()}{/if}
       <button class="usermenu-item usermenu-item--logout" onclick={handleLogout}>Uitloggen</button>
     </div>
   {/if}
 </div>
-
-{#if loginDialogOpen}
-  <LoginDialog onlogin={handleLogin} oncancel={() => (loginDialogOpen = false)} />
-{/if}
 
 <style>
   .usermenu {

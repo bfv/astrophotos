@@ -5,6 +5,7 @@
 	import BottomBar from '$lib/components/BottomBar.svelte';
 	import Toast from '$lib/components/Toast.svelte';
 	import { photos } from '$lib/photoService';
+	import type { Photo } from '$lib/types';
 	import { browser } from '$app/environment';
 	import { onMount } from 'svelte';
 	import { goto } from '$app/navigation';
@@ -142,3 +143,5 @@
 		border-color: #6688cc;
 	}
 </style>
+
+export const prerender = false;

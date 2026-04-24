@@ -1,11 +1,27 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import { initAuth } from '$lib/auth';
+	import { initAuth, isLoggedIn, accessToken } from '$lib/auth';
+	import { loadPhotos, clearPhotos } from '$lib/photoService';
 
 	let { children } = $props();
 
 	onMount(() => {
-		initAuth();
+		let unsub: (() => void) | undefined;
+
+		initAuth().then(() => {
+			unsub = isLoggedIn.subscribe(async (loggedIn) => {
+				if (loggedIn) {
+					let token: string | null = null;
+					const t = accessToken.subscribe((v) => (token = v));
+					t();
+					await loadPhotos(token);
+				} else {
+					clearPhotos();
+				}
+			});
+		});
+
+		return () => unsub?.();
 	});
 </script>
 

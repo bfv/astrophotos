@@ -1,5 +1,6 @@
 <script lang="ts">
   import type { Snippet } from 'svelte';
+  import UserMenu from './UserMenu.svelte';
 
   interface Props {
     title?: string;
@@ -16,6 +17,7 @@
   </div>
   <div class="topbar-controls">
     {#if children}{@render children()}{/if}
+    <UserMenu />
   </div>
 </header>
 

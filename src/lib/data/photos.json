@@ -1003,5 +1003,20 @@
       "equipment": null,
       "exposure": null
     }
+  },
+  {
+    "id": "95",
+    "name": "NGC5907",
+    "ra": 228.9707500,
+    "dec": 56.3325000,
+    "fov": 0,
+    "rotation": 0,
+    "thumbnail": null,
+    "fullSizeUrl": null,
+    "metadata": {
+      "date": null,
+      "equipment": null,
+      "exposure": null
+    }
   }
 ]

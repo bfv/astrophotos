@@ -3,9 +3,22 @@
 	import StarChart from '$lib/components/StarChart.svelte';
 	import InfoCard from '$lib/components/InfoCard.svelte';
 	import BottomBar from '$lib/components/BottomBar.svelte';
+	import Toast from '$lib/components/Toast.svelte';
+	import { photos } from '$lib/photoService';
 	import type { Photo } from '$lib/types';
-	import photosData from '$lib/data/photos.json';
 	import { browser } from '$app/environment';
+	import { onMount } from 'svelte';
+	import { goto } from '$app/navigation';
+
+	let showLoggedOutToast = $state(false);
+
+	onMount(() => {
+		const params = new URLSearchParams(window.location.search);
+		if (params.get('logged_out') === '1') {
+			showLoggedOutToast = true;
+			goto('/', { replaceState: true });
+		}
+	});
 
 	const PROJECTIONS = [
 		{ value: 'equirectangular', label: 'Equirectangular' },
@@ -33,7 +46,6 @@
 		if (browser) localStorage.setItem('centerRA', String(value));
 	}
 
-	const photos: Photo[] = photosData as unknown as Photo[];
 	let selectedPhoto: Photo | null = $state(null);
 	let clickPosition: { x: number; y: number } | null = $state(null);
 	let starChart: StarChart;
@@ -66,9 +78,12 @@
 	</select>
 	<button class="reset-btn" onclick={() => starChart.resetCenter()}>⌖ Reset</button>
 </TopBar>
-<StarChart bind:this={starChart} {photos} {projection} {centerRA} onselect={handleSelect} />
+<StarChart bind:this={starChart} photos={$photos} {projection} {centerRA} onselect={handleSelect} />
 <InfoCard photo={selectedPhoto} position={clickPosition} onclose={handleClose} />
-<BottomBar photoCount={photos.length} />
+<BottomBar photoCount={$photos.length} />
+{#if showLoggedOutToast}
+	<Toast message="Je bent uitgelogd." onhide={() => (showLoggedOutToast = false)} />
+{/if}
 
 <style>
 	:global(.center-ra-set) {
@@ -128,3 +143,5 @@
 		border-color: #6688cc;
 	}
 </style>
+
+export const prerender = false;

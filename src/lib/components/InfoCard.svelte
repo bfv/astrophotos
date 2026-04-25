@@ -1,6 +1,7 @@
 <script lang="ts">
   import type { Snippet } from 'svelte';
   import type { Photo } from '$lib/types';
+  import { t } from '$lib/i18n';
 
   interface Props {
     photo: Photo | null;
@@ -51,7 +52,7 @@
 
 {#if photo}
   <div class="infocard" style={cardStyle}>
-    <button class="infocard-close" onclick={onclose} aria-label="Close">&times;</button>
+    <button class="infocard-close" onclick={onclose} aria-label={$t.info.close}>&times;</button>
 
     <a
       href={photo.fullSizeUrl ?? '#'}
@@ -77,13 +78,13 @@
       {#if photo.metadata}
         <dl class="infocard-meta">
           {#if photo.metadata.date}
-            <dt>Date</dt><dd>{photo.metadata.date}</dd>
+            <dt>{$t.info.date}</dt><dd>{photo.metadata.date}</dd>
           {/if}
           {#if photo.metadata.equipment}
-            <dt>Equipment</dt><dd>{photo.metadata.equipment}</dd>
+            <dt>{$t.info.equipment}</dt><dd>{photo.metadata.equipment}</dd>
           {/if}
           {#if photo.metadata.exposure}
-            <dt>Exposure</dt><dd>{photo.metadata.exposure}</dd>
+            <dt>{$t.info.exposure}</dt><dd>{photo.metadata.exposure}</dd>
           {/if}
         </dl>
       {/if}

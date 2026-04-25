@@ -2,6 +2,7 @@
   import { onMount } from 'svelte';
   import { goto } from '$app/navigation';
   import { handleCallback } from '$lib/auth';
+  import { t } from '$lib/i18n';
 
   let error = $state('');
 
@@ -17,11 +18,11 @@
 
 {#if error}
   <div class="callback-error">
-    <p>Inloggen mislukt: {error}</p>
-    <a href="/">Terug naar home</a>
+    <p>{$t.callback.loginFailed(error)}</p>
+    <a href="/">{$t.callback.backToHome}</a>
   </div>
 {:else}
-  <div class="callback-loading">Inloggen...</div>
+  <div class="callback-loading">{$t.callback.loggingIn}</div>
 {/if}
 
 <style>

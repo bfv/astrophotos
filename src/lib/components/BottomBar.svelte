@@ -1,4 +1,6 @@
 <script lang="ts">
+  import { t } from '$lib/i18n';
+
   interface Props {
     photoCount?: number;
   }
@@ -8,7 +10,7 @@
 
 <footer class="bottombar">
   <a class="bottombar-repo" href="https://github.com/bfv/astrophotos" target="_blank" rel="noopener noreferrer">github.com/bfv/astrophotos</a>
-  <span class="bottombar-info">{photoCount} photo{photoCount !== 1 ? 's' : ''} loaded</span>
+  <span class="bottombar-info">{$t.bar.photosLoaded(photoCount)}</span>
 </footer>
 
 <style>

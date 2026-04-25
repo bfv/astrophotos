@@ -9,6 +9,7 @@
 	import { browser } from '$app/environment';
 	import { onMount } from 'svelte';
 	import { goto } from '$app/navigation';
+	import { t } from '$lib/i18n';
 
 	let showLoggedOutToast = $state(false);
 
@@ -82,7 +83,7 @@
 <InfoCard photo={selectedPhoto} position={clickPosition} onclose={handleClose} />
 <BottomBar photoCount={$photos.length} />
 {#if showLoggedOutToast}
-	<Toast message="Je bent uitgelogd." onhide={() => (showLoggedOutToast = false)} />
+	<Toast message={$t.page.loggedOut} onhide={() => (showLoggedOutToast = false)} />
 {/if}
 
 <style>
@@ -143,5 +144,3 @@
 		border-color: #6688cc;
 	}
 </style>
-
-export const prerender = false;

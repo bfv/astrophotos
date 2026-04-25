@@ -1,5 +1,6 @@
 <script lang="ts">
   import { user, isLoggedIn, login, logout, accountUrl } from '$lib/auth';
+  import { t } from '$lib/i18n';
 
   interface Props {
     children?: import('svelte').Snippet;
@@ -29,7 +30,7 @@
     }
   }
 
-  const displayName = $derived($user?.profile?.preferred_username ?? $user?.profile?.name ?? 'Gebruiker');
+  const displayName = $derived($user?.profile?.preferred_username ?? $user?.profile?.name ?? $t.user.displayNameFallback);
 </script>
 
 <div class="usermenu" onblur={handleBlur}>
@@ -37,7 +38,7 @@
     class="usermenu-btn"
     class:usermenu-btn--loggedin={$isLoggedIn}
     onclick={handleButtonClick}
-    aria-label={$isLoggedIn ? 'Gebruikersmenu' : 'Inloggen'}
+    aria-label={$isLoggedIn ? $t.user.menuAriaLabel : $t.user.loginAriaLabel}
     aria-expanded={$isLoggedIn ? menuOpen : undefined}
   >
     {#if $isLoggedIn}
@@ -60,8 +61,8 @@
     <div class="usermenu-dropdown">
       <div class="usermenu-username">{displayName}</div>
       {#if children}{@render children()}{/if}
-      <a class="usermenu-item" href={accountUrl} target="_blank" rel="noopener noreferrer">Accountinstellingen</a>
-      <button class="usermenu-item usermenu-item--logout" onclick={handleLogout}>Uitloggen</button>
+      <a class="usermenu-item" href={accountUrl} target="_blank" rel="noopener noreferrer">{$t.user.accountSettings}</a>
+      <button class="usermenu-item usermenu-item--logout" onclick={handleLogout}>{$t.user.logout}</button>
     </div>
   {/if}
 </div>

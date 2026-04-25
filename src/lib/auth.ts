@@ -18,6 +18,8 @@ const config = {
 
 export const userManager = browser ? new UserManager(config) : null;
 
+export const accountUrl = browser ? `${window.__APP_CONFIG__.authAuthority}/account` : '';
+
 const userStore = writable<User | null>(null);
 
 export const user = { subscribe: userStore.subscribe };

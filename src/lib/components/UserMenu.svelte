@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { user, isLoggedIn, login, logout } from '$lib/auth';
+  import { user, isLoggedIn, login, logout, accountUrl } from '$lib/auth';
 
   interface Props {
     children?: import('svelte').Snippet;
@@ -60,6 +60,7 @@
     <div class="usermenu-dropdown">
       <div class="usermenu-username">{displayName}</div>
       {#if children}{@render children()}{/if}
+      <a class="usermenu-item" href={accountUrl} target="_blank" rel="noopener noreferrer">Accountinstellingen</a>
       <button class="usermenu-item usermenu-item--logout" onclick={handleLogout}>Uitloggen</button>
     </div>
   {/if}
@@ -125,6 +126,8 @@
     font-size: 13px;
     text-align: left;
     cursor: pointer;
+    text-decoration: none;
+    box-sizing: border-box;
   }
 
   .usermenu-item:hover {

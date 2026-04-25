@@ -5,8 +5,29 @@ export type TranslationSet = {
     displayNameFallback: string;
     menuAriaLabel: string;
     loginAriaLabel: string;
-    accountSettings: string;
     logout: string;
+  };
+  settings: {
+    menuItem: string;
+    title: string;
+    language: string;
+    languageAuto: string;
+    location: string;
+    locationLat: string;
+    locationLon: string;
+    useMyLocation: string;
+    locationAcquired: string;
+    locationError: string;
+    timezone: string;
+    timezoneAuto: string;
+    timezoneDetect: string;
+    api: string;
+    save: string;
+    cancel: string;
+    discardTitle: string;
+    discardMessage: string;
+    discardConfirm: string;
+    discardCancel: string;
   };
   bar: {
     photosLoaded: (count: number) => string;
@@ -33,8 +54,29 @@ export const translations: Record<Locale, TranslationSet> = {
       displayNameFallback: 'User',
       menuAriaLabel: 'User menu',
       loginAriaLabel: 'Log in',
-      accountSettings: 'Account settings',
       logout: 'Log out',
+    },
+    settings: {
+      menuItem: 'Settings',
+      title: 'Settings',
+      language: 'Language',
+      languageAuto: 'Auto (from browser)',
+      location: 'Observation location',
+      locationLat: 'Latitude',
+      locationLon: 'Longitude',
+      useMyLocation: 'Use my location',
+      locationAcquired: 'Location acquired',
+      locationError: 'Could not get location',
+      timezone: 'Time zone',
+      timezoneAuto: 'Auto (from location / device)',
+      timezoneDetect: 'Use system time zone',
+      api: 'API',
+      save: 'Save',
+      cancel: 'Cancel',
+      discardTitle: 'Discard changes?',
+      discardMessage: 'You have unsaved changes. Discard them and close?',
+      discardConfirm: 'Discard',
+      discardCancel: 'Keep editing',
     },
     bar: {
       photosLoaded: (count) => `${count} photo${count !== 1 ? 's' : ''} loaded`,
@@ -59,8 +101,29 @@ export const translations: Record<Locale, TranslationSet> = {
       displayNameFallback: 'Gebruiker',
       menuAriaLabel: 'Gebruikersmenu',
       loginAriaLabel: 'Inloggen',
-      accountSettings: 'Accountinstellingen',
       logout: 'Uitloggen',
+    },
+    settings: {
+      menuItem: 'Instellingen',
+      title: 'Instellingen',
+      language: 'Taal',
+      languageAuto: 'Automatisch (via browser)',
+      location: 'Waarnemingslocatie',
+      locationLat: 'Breedtegraad',
+      locationLon: 'Lengtegraad',
+      useMyLocation: 'Gebruik mijn locatie',
+      locationAcquired: 'Locatie verkregen',
+      locationError: 'Locatie niet beschikbaar',
+      timezone: 'Tijdzone',
+      timezoneAuto: 'Automatisch (van locatie / apparaat)',
+      timezoneDetect: 'Gebruik systeemtijdzone',
+      api: 'API',
+      save: 'Opslaan',
+      cancel: 'Annuleren',
+      discardTitle: 'Wijzigingen verwerpen?',
+      discardMessage: 'Je hebt niet-opgeslagen wijzigingen. Verwerpen en sluiten?',
+      discardConfirm: 'Verwerpen',
+      discardCancel: 'Bewerken',
     },
     bar: {
       photosLoaded: (count) => `${count} foto${count !== 1 ? "'s" : ''} geladen`,

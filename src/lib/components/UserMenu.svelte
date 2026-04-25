@@ -1,6 +1,7 @@
 <script lang="ts">
-  import { user, isLoggedIn, login, logout, accountUrl } from '$lib/auth';
+  import { user, isLoggedIn, login, logout } from '$lib/auth';
   import { t } from '$lib/i18n';
+  import Settings from './Settings.svelte';
 
   interface Props {
     children?: import('svelte').Snippet;
@@ -9,6 +10,7 @@
   let { children }: Props = $props();
 
   let menuOpen = $state(false);
+  let showSettings = $state(false);
 
   function handleButtonClick() {
     if ($isLoggedIn) {
@@ -21,6 +23,11 @@
   function handleLogout() {
     menuOpen = false;
     logout();
+  }
+
+  function handleOpenSettings() {
+    menuOpen = false;
+    showSettings = true;
   }
 
   function handleBlur(e: FocusEvent) {
@@ -61,11 +68,15 @@
     <div class="usermenu-dropdown">
       <div class="usermenu-username">{displayName}</div>
       {#if children}{@render children()}{/if}
-      <a class="usermenu-item" href={accountUrl} target="_blank" rel="noopener noreferrer">{$t.user.accountSettings}</a>
+      <button class="usermenu-item" onclick={handleOpenSettings}>{$t.settings.menuItem}</button>
       <button class="usermenu-item usermenu-item--logout" onclick={handleLogout}>{$t.user.logout}</button>
     </div>
   {/if}
 </div>
+
+{#if showSettings}
+  <Settings onclose={() => (showSettings = false)} />
+{/if}
 
 <style>
   .usermenu {

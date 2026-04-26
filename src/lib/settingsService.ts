@@ -11,7 +11,7 @@ export interface UserSettings {
 }
 
 export interface SettingsService {
-  load(): Promise<UserSettings>;
+  load(token?: string | null): Promise<UserSettings>;
   save(settings: UserSettings): Promise<void>;
 }
 
@@ -48,11 +48,11 @@ function toApi(s: UserSettings): Record<string, unknown> {
 }
 
 const apiService: SettingsService = {
-  async load(): Promise<UserSettings> {
-    const token = get(accessToken);
-    if (!token) return { ...defaults };
+  async load(token?: string | null): Promise<UserSettings> {
+    const t = token ?? get(accessToken);
+    if (!t) return { ...defaults };
     const res = await fetch(`${apiBaseUrl}/api/settings`, {
-      headers: { Authorization: `Bearer ${token}` },
+      headers: { Authorization: `Bearer ${t}` },
     });
     if (!res.ok) throw new Error(`Failed to load settings: ${res.status}`);
     return fromApi(await res.json());

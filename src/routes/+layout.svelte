@@ -15,7 +15,7 @@
 					let token: string | null = null;
 					const t = accessToken.subscribe((v) => (token = v));
 					t();
-					await Promise.all([loadPhotos(token), loadSettings()]);
+					await Promise.all([loadPhotos(token), loadSettings(token)]);
 				} else {
 					clearPhotos();
 				}

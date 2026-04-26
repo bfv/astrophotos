@@ -16,11 +16,11 @@ settings.subscribe((val) => {
   }
 });
 
-export async function loadSettings(): Promise<void> {
+export async function loadSettings(token?: string | null): Promise<void> {
   if (!browser) return;
   _loading = true;
   try {
-    const loaded = await settingsService.load();
+    const loaded = await settingsService.load(token);
     settings.set(loaded);
   } catch {
     // keep defaults

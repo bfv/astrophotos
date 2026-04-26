@@ -61,6 +61,9 @@ export type TranslationSet = {
     hoverTime: string;
     hoverAlt: string;
     hoverAz: string;
+    graphDaily: string;
+    graphYearly: string;
+    obsHour: string;
   };
 };
 
@@ -126,6 +129,9 @@ export const translations: Record<Locale, TranslationSet> = {
       hoverTime: 'Time',
       hoverAlt: 'Alt',
       hoverAz: 'Az',
+      graphDaily: 'Daily',
+      graphYearly: 'Yearly',
+      obsHour: 'At',
     },
   },
   nl: {
@@ -189,6 +195,9 @@ export const translations: Record<Locale, TranslationSet> = {
       hoverTime: 'Tijd',
       hoverAlt: 'Hoogte',
       hoverAz: 'Azimut',
+      graphDaily: 'Vandaag',
+      graphYearly: 'Jaar',
+      obsHour: 'Om',
     },
   },
 };

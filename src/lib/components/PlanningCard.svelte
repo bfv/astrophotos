@@ -32,6 +32,10 @@
   const horizonY = yOf(0);
   const midnightX = xOf(0);
 
+  function xOfDay(dayIndex: number): number {
+    return (dayIndex / 364) * GW;
+  }
+
   // ── Formatters ─────────────────────────────────────────────────────────────
   function formatRA(deg: number): string {
     const totalH = deg / 15;
@@ -74,6 +78,45 @@
     // If we're past noon, plan for tonight (next midnight); otherwise use last midnight
     const hoursSince = (now.getTime() - thisMidnight) / 3_600_000;
     return hoursSince > 12 ? thisMidnight + 86_400_000 : thisMidnight;
+  }
+
+  // Returns the UTC ms corresponding to `localHour:00:00` in the target timezone
+  // on the calendar day that is `dayIndex` days after Jan 1 of the current year.
+  // Uses noon UTC as a safe anchor to avoid date-boundary edge cases, then
+  // derives the actual timezone offset for that specific day (DST-aware).
+  function getYearDayUTCMs(dayIndex: number, localHour: number): number {
+    const tz = $settings.timezone ?? Intl.DateTimeFormat().resolvedOptions().timeZone;
+    const year = new Date().getFullYear();
+    // Noon UTC on day i — safely in the middle of the day for any timezone
+    const refUtc = new Date(Date.UTC(year, 0, 1 + dayIndex, 12, 0, 0));
+    const parts = new Intl.DateTimeFormat('en', {
+      timeZone: tz,
+      year: 'numeric', month: '2-digit', day: '2-digit',
+      hour: '2-digit', minute: '2-digit', second: '2-digit',
+      hour12: false,
+    }).formatToParts(refUtc);
+    const get = (type: string) => parseInt(parts.find((p) => p.type === type)!.value, 10);
+    // Treat local components as UTC to derive the offset at this day
+    const refLocalMs = Date.UTC(get('year'), get('month') - 1, get('day'), get('hour'), get('minute'), get('second'));
+    const offsetMins = Math.round((refLocalMs - refUtc.getTime()) / 60000);
+    // Local midnight UTC for this calendar day, then add localHour
+    return Date.UTC(get('year'), get('month') - 1, get('day'), 0, 0, 0) - offsetMins * 60000 + localHour * 3_600_000;
+  }
+
+  function getYearStartUTCMs(): number {
+    const tz = $settings.timezone ?? Intl.DateTimeFormat().resolvedOptions().timeZone;
+    const year = new Date().getFullYear();
+    const jan1 = new Date(Date.UTC(year, 0, 1));
+    const parts = new Intl.DateTimeFormat('en', {
+      timeZone: tz,
+      year: 'numeric', month: '2-digit', day: '2-digit',
+      hour: '2-digit', minute: '2-digit', second: '2-digit',
+      hour12: false,
+    }).formatToParts(jan1);
+    const get = (type: string) => parseInt(parts.find((p) => p.type === type)!.value, 10);
+    const localMs = Date.UTC(get('year'), get('month') - 1, get('day'), get('hour'), get('minute'), get('second'));
+    const offsetMins = Math.round((localMs - jan1.getTime()) / 60000);
+    return Date.UTC(year, 0, 1, 0, 0, 0) - offsetMins * 60000;
   }
 
   // ── Altitude formula ───────────────────────────────────────────────────────
@@ -181,6 +224,11 @@
     ].join(' ');
   });
 
+  // Whether the object stays entirely below the horizon
+  const dailyBelowHorizon = $derived(
+    !!altPoints && altPoints.every((p) => p.alt < 0)
+  );
+
   // X-axis ticks every 3 hours: -12 … +12
   const xTicks = [-12, -9, -6, -3, 0, 3, 6, 9, 12].map((h) => ({
     x: xOf(h),
@@ -192,6 +240,62 @@
     const hourOffset = (Date.now() - getMidnightUTCMs()) / 3_600_000;
     const x = xOf(hourOffset);
     return (x >= 0 && x <= GW) ? x : null;
+  });
+
+  // ── Graph mode ────────────────────────────────────────────────────────────
+  type GraphMode = 'daily' | 'yearly';
+  let graphMode: GraphMode = $state('daily');
+  let yearlyObsHour = $state(0); // local hour to sample altitude for yearly view
+  const yearlyHours = Array.from({ length: 24 }, (_, i) => (19 + i) % 24);
+
+  // ── Yearly altitude data ──────────────────────────────────────────────────
+  const yearlyPoints = $derived.by(() => {
+    if (!photo) return null;
+    const lat = $settings.location?.lat;
+    const lon = $settings.location?.lon;
+    if (lat == null || lon == null) return null;
+
+    return Array.from({ length: 365 }, (_, i) => {
+      const utcMs = getYearDayUTCMs(i, yearlyObsHour);
+      const alt = computeAlt(photo.ra, photo.dec, utcMs, lat, lon);
+      const clampedAlt = Math.max(ALT_MIN, Math.min(ALT_MAX, alt));
+      return { x: xOfDay(i), y: yOf(clampedAlt), alt };
+    });
+  });
+
+  const yearlyPeakX = $derived.by(() => {
+    if (!yearlyPoints) return null;
+    let best = yearlyPoints[0];
+    for (const p of yearlyPoints) if (p.alt > best.alt) best = p;
+    return best.x;
+  });
+
+  const yearlyPolyline = $derived(
+    yearlyPoints?.map((p) => `${p.x.toFixed(1)},${p.y.toFixed(1)}`).join(' ') ?? ''
+  );
+
+  const yearlyAboveFill = $derived.by(() => {
+    if (!yearlyPoints) return '';
+    const pts = yearlyPoints.map((p) => `${p.x.toFixed(1)},${p.y.toFixed(1)}`);
+    const hY = horizonY.toFixed(1);
+    return [
+      `${yearlyPoints[0].x.toFixed(1)},${hY}`,
+      ...pts,
+      `${yearlyPoints[yearlyPoints.length - 1].x.toFixed(1)},${hY}`,
+    ].join(' ');
+  });
+
+  const yearlyBelowHorizon = $derived(
+    !!yearlyPoints && yearlyPoints.every((p) => p.alt < 0)
+  );
+
+  const _curYear = new Date().getFullYear();
+  const yearlyXTicks = Array.from({ length: 12 }, (_, m) => {
+    const dayIndex = Math.round(
+      (new Date(_curYear, m, 1).getTime() - new Date(_curYear, 0, 1).getTime()) / 86_400_000
+    );
+    const label = new Intl.DateTimeFormat('en', { month: 'short' }).format(new Date(_curYear, m, 1));
+    return { x: xOfDay(dayIndex), label };
   });
 
   // ── Card positioning ───────────────────────────────────────────────────────
@@ -224,7 +328,7 @@
   }
 
   // The active x: hover position, or peak altitude position when not hovering
-  const activeX = $derived(hoverX ?? peakX);
+  const activeX = $derived(hoverX ?? (graphMode === 'daily' ? peakX : yearlyPeakX));
 
   // ── Hover time + altitude ─────────────────────────────────────────────────
   const hoverInfo = $derived.by(() => {
@@ -233,16 +337,23 @@
     const lon = $settings.location?.lon;
     if (lat == null || lon == null) return null;
 
-    const hourOffset = (activeX / GW) * 24 - 12;
-    const midnightUTC = getMidnightUTCMs();
-    const utcMs = midnightUTC + hourOffset * 3_600_000;
-    const { alt, az } = computeAltAz(photo.ra, photo.dec, utcMs, lat, lon);
-
     const tz = $settings.timezone ?? Intl.DateTimeFormat().resolvedOptions().timeZone;
-    const timeStr = new Intl.DateTimeFormat('en', {
-      timeZone: tz, hour: '2-digit', minute: '2-digit', hour12: false,
-    }).format(new Date(utcMs));
+    let utcMs: number;
+    let timeStr: string;
 
+    if (graphMode === 'daily') {
+      const hourOffset = (activeX / GW) * 24 - 12;
+      utcMs = getMidnightUTCMs() + hourOffset * 3_600_000;
+      timeStr = new Intl.DateTimeFormat('en', {
+        timeZone: tz, hour: '2-digit', minute: '2-digit', hour12: false,
+      }).format(new Date(utcMs));
+    } else {
+      const dayIndex = Math.round((activeX / GW) * 364);
+      utcMs = getYearDayUTCMs(dayIndex, yearlyObsHour);
+      timeStr = new Intl.DateTimeFormat('en', { month: 'short', day: 'numeric' }).format(new Date(utcMs));
+    }
+
+    const { alt, az } = computeAltAz(photo.ra, photo.dec, utcMs, lat, lon);
     return { time: timeStr, alt: alt.toFixed(1), az: az.toFixed(1) };
   });
 </script>
@@ -251,7 +362,31 @@
   <div class="plancard" style={cardStyle}>
     <button class="plancard-close" onclick={onclose} aria-label={$t.info.close}>&times;</button>
     <div class="plancard-body">
-      <h3 class="plancard-name">{photo.name}</h3>
+      <div class="plancard-title-row">
+        <h3 class="plancard-name">{photo.name}</h3>
+        <div class="graph-mode-set">
+          <label class="gm-option" class:gm-active={graphMode === 'daily'}>
+            <input type="radio" name="graph-mode-{photo.id}" value="daily" bind:group={graphMode} />
+            {$t.planning.graphDaily}
+          </label>
+          <label class="gm-option" class:gm-active={graphMode === 'yearly'}>
+            <input type="radio" name="graph-mode-{photo.id}" value="yearly" bind:group={graphMode} />
+            {$t.planning.graphYearly}
+          </label>
+        </div>
+        {#if graphMode === 'yearly'}
+          <div class="obs-hour-select">
+            <select bind:value={yearlyObsHour}>
+              {#each yearlyHours as h}
+                <option value={h}>{String(h).padStart(2, '0')}:00</option>
+              {/each}
+            </select>
+          </div>
+        {:else}
+          <div></div>
+        {/if}
+      </div>
+      <hr class="plancard-divider" />
       <div class="plancard-header-row">
         <dl class="plancard-coords">
           <dt>RA</dt><dd>{formatRA(photo.ra)}</dd>
@@ -266,62 +401,105 @@
         {/if}
       </div>
 
-      {#if altPoints}
-        <!-- SVG viewBox has 22px left for y-labels, 4px top, 4px right, 14px bottom for x-labels -->
-        <div class="plancard-graph">
-          <svg bind:this={svgEl} viewBox="-22 -4 {GW + 26} {GH + 18}" width="100%" aria-hidden="true"
-               onmousemove={onSvgMouseMove} onmouseleave={onSvgMouseLeave}>
-            <defs>
-              <clipPath id="above-{photo.id}">
-                <rect x="0" y="0" width={GW} height={horizonY} />
-              </clipPath>
-            </defs>
+      {#if graphMode === 'daily'}
+        {#if altPoints}
+          <div class="plancard-graph">
+            <svg bind:this={svgEl} viewBox="-22 -4 {GW + 26} {GH + 18}" width="100%" aria-hidden="true"
+                 onmousemove={onSvgMouseMove} onmouseleave={onSvgMouseLeave}>
+              <defs>
+                <clipPath id="above-{photo.id}">
+                  <rect x="0" y="0" width={GW} height={horizonY} />
+                </clipPath>
+              </defs>
 
-            <!-- Twilight zones (background) -->
-            {#each twilightBands as band}
-              {#if band.fill}
-                <rect x={band.x.toFixed(1)} y="0" width={band.w.toFixed(1)} height={GH} fill={band.fill} />
+              <!-- Twilight zones (background) -->
+              {#each twilightBands as band}
+                {#if band.fill}
+                  <rect x={band.x.toFixed(1)} y="0" width={band.w.toFixed(1)} height={GH} fill={band.fill} />
+                {/if}
+              {/each}
+
+              <!-- Above-horizon fill -->
+              <polygon points={aboveFill} clip-path="url(#above-{photo.id})" fill="rgba(100,160,255,0.10)" />
+
+              <!-- 45° guide -->
+              <line x1="0" y1={yOf(45)} x2={GW} y2={yOf(45)} stroke="#2a2a4a" stroke-width="1" />
+
+              <!-- Horizon -->
+              <line x1="0" y1={horizonY} x2={GW} y2={horizonY}
+                stroke={dailyBelowHorizon ? '#7799ff' : '#555'} stroke-width="1" stroke-dasharray="4,3" />
+              <line x1={midnightX} y1="0" x2={midnightX} y2={GH} stroke="#445566" stroke-width="1" stroke-dasharray="4,3" />
+
+              <!-- Now -->
+              {#if nowX !== null}
+                <line x1={nowX} y1="0" x2={nowX} y2={GH} stroke="#ffee44" stroke-width="1" stroke-dasharray="3,3" opacity="0.7" />
               {/if}
-            {/each}
 
-            <!-- Above-horizon fill -->
-            <polygon points={aboveFill} clip-path="url(#above-{photo.id})" fill="rgba(100,160,255,0.10)" />
+              <!-- Altitude curve -->
+              <polyline points={altPolyline} fill="none" stroke="#7799ff" stroke-width="1.5" stroke-linejoin="round" clip-path="url(#above-{photo.id})" />
 
-            <!-- 45° guide -->
-            <line x1="0" y1={yOf(45)} x2={GW} y2={yOf(45)} stroke="#2a2a4a" stroke-width="1" />
+              <!-- Y-axis labels -->
+              <text x="-4" y={yOf(90) + 3} text-anchor="end" font-size="8" fill="#666">90°</text>
+              <text x="-4" y={yOf(45) + 3} text-anchor="end" font-size="8" fill="#666">45°</text>
+              <text x="-4" y={horizonY + 3} text-anchor="end" font-size="8" fill="#666">0°</text>
 
-            <!-- Horizon -->
-            <line x1="0" y1={horizonY} x2={GW} y2={horizonY} stroke="#555" stroke-width="1" stroke-dasharray="4,3" />
+              <!-- X-axis labels -->
+              {#each xTicks as tick}
+                <text x={tick.x} y={GH + 12} text-anchor="middle" font-size="8" fill="#666">{tick.label}</text>
+              {/each}
 
-            <!-- Midnight -->
-            <line x1={midnightX} y1="0" x2={midnightX} y2={GH} stroke="#445566" stroke-width="1" stroke-dasharray="4,3" />
-
-            <!-- Now -->
-            {#if nowX !== null}
-              <line x1={nowX} y1="0" x2={nowX} y2={GH} stroke="#ffee44" stroke-width="1" stroke-dasharray="3,3" opacity="0.7" />
-            {/if}
-
-            <!-- Altitude curve -->
-            <polyline points={altPolyline} fill="none" stroke="#7799ff" stroke-width="1.5" stroke-linejoin="round" />
-
-            <!-- Y-axis labels -->
-            <text x="-4" y={yOf(90) + 3} text-anchor="end" font-size="8" fill="#666">90°</text>
-            <text x="-4" y={yOf(45) + 3} text-anchor="end" font-size="8" fill="#666">45°</text>
-            <text x="-4" y={horizonY + 3} text-anchor="end" font-size="8" fill="#666">0°</text>
-
-            <!-- X-axis labels -->
-            {#each xTicks as tick}
-              <text x={tick.x} y={GH + 12} text-anchor="middle" font-size="8" fill="#666">{tick.label}</text>
-            {/each}
-
-            <!-- Hover/peak crosshair -->
-            {#if activeX !== null}
-              <line x1={activeX} y1="0" x2={activeX} y2={GH} stroke="#aabbff" stroke-width="1" stroke-dasharray="3,3" />
-            {/if}
-          </svg>
-        </div>
+              <!-- Hover/peak crosshair -->
+              {#if activeX !== null}
+                <line x1={activeX} y1="0" x2={activeX} y2={GH} stroke="#aabbff" stroke-width="1" stroke-dasharray="3,3" />
+              {/if}
+            </svg>
+          </div>
+        {:else}
+          <p class="plancard-no-location">{$t.planning.noLocation}</p>
+        {/if}
       {:else}
-        <p class="plancard-no-location">{$t.planning.noLocation}</p>
+        {#if yearlyPoints}
+          <div class="plancard-graph">
+            <svg bind:this={svgEl} viewBox="-22 -4 {GW + 26} {GH + 18}" width="100%" aria-hidden="true"
+                 onmousemove={onSvgMouseMove} onmouseleave={onSvgMouseLeave}>
+              <defs>
+                <clipPath id="above-yr-{photo.id}">
+                  <rect x="0" y="0" width={GW} height={horizonY} />
+                </clipPath>
+              </defs>
+
+              <!-- Above-horizon fill -->
+              <polygon points={yearlyAboveFill} clip-path="url(#above-yr-{photo.id})" fill="rgba(100,160,255,0.10)" />
+
+              <!-- 45° guide -->
+              <line x1="0" y1={yOf(45)} x2={GW} y2={yOf(45)} stroke="#2a2a4a" stroke-width="1" />
+
+              <!-- Horizon -->
+              <line x1="0" y1={horizonY} x2={GW} y2={horizonY}
+                stroke={yearlyBelowHorizon ? '#7799ff' : '#555'} stroke-width="1" stroke-dasharray="4,3" />
+
+              <!-- Altitude curve -->
+              <polyline points={yearlyPolyline} fill="none" stroke="#7799ff" stroke-width="1.5" stroke-linejoin="round" clip-path="url(#above-yr-{photo.id})" />
+
+              <!-- Y-axis labels -->
+              <text x="-4" y={yOf(90) + 3} text-anchor="end" font-size="8" fill="#666">90°</text>
+              <text x="-4" y={yOf(45) + 3} text-anchor="end" font-size="8" fill="#666">45°</text>
+              <text x="-4" y={horizonY + 3} text-anchor="end" font-size="8" fill="#666">0°</text>
+
+              <!-- X-axis labels -->
+              {#each yearlyXTicks as tick}
+                <text x={tick.x} y={GH + 12} text-anchor="middle" font-size="8" fill="#666">{tick.label}</text>
+              {/each}
+
+              <!-- Hover/peak crosshair -->
+              {#if activeX !== null}
+                <line x1={activeX} y1="0" x2={activeX} y2={GH} stroke="#aabbff" stroke-width="1" stroke-dasharray="3,3" />
+              {/if}
+            </svg>
+          </div>
+        {:else}
+          <p class="plancard-no-location">{$t.planning.noLocation}</p>
+        {/if}
       {/if}
     </div>
   </div>
@@ -361,9 +539,8 @@
   }
 
   .plancard-name {
-    margin: 0 0 6px;
+    margin: 0;
     font-size: 16px;
-    padding-right: 20px;
   }
 
   .plancard-header-row {
@@ -398,6 +575,72 @@
 
   .plancard-graph {
     width: 100%;
+  }
+
+  .plancard-divider {
+    border: none;
+    border-top: 1px solid rgba(255, 255, 255, 0.15);
+    margin: 0 0 8px;
+  }
+
+  .plancard-title-row {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    margin: 0 0 6px;
+    padding-right: 22px; /* leave room for absolute close button */
+    min-height: 24px;
+  }
+
+  .graph-mode-set {
+    display: flex;
+    border: 1px solid #555;
+    border-radius: 4px;
+    overflow: hidden;
+    flex-shrink: 0;
+  }
+  .gm-option {
+    display: flex;
+    align-items: center;
+    padding: 2px 8px;
+    font-size: 11px;
+    cursor: pointer;
+    background: #0d0d1a;
+    color: #aaa;
+    user-select: none;
+    transition: background 0.15s;
+  }
+  .gm-option:not(:last-child) {
+    border-right: 1px solid #555;
+  }
+  .gm-option:hover {
+    background: #1a1a3e;
+    color: #e0e0e0;
+  }
+  .gm-active {
+    background: #1a1a4a;
+    color: #aabbff;
+  }
+  .gm-option input[type='radio'] {
+    display: none;
+  }
+
+  .obs-hour-select {
+    display: flex;
+    align-items: center;
+    padding-left: 5px;
+    font-size: 11px;
+    color: #aaa;
+  }
+
+  .obs-hour-select select {
+    background: #0d0d1a;
+    color: #aabbff;
+    border: 1px solid #555;
+    border-radius: 4px;
+    font-size: 11px;
+    padding: 2px 4px;
+    cursor: pointer;
   }
 
   .plancard-no-location {

@@ -13,6 +13,8 @@
   let celestialInstance: any = null;
   let prevProjection: string | undefined;
   let prevCenterRA: number | undefined;
+  // Mutable ref so redraw callback always uses the latest photos
+  let currentFeatures: ReturnType<typeof photosToGeoJSON>['features'] = [];
 
   function currentProjection(coords: [number, number]): [number, number] | null {
     return celestialInstance?.map?.projection()(coords) ?? null;
@@ -124,6 +126,7 @@
     };
 
     const photoGeoJSON = photosToGeoJSON(photos);
+    currentFeatures = photoGeoJSON.features;
 
     Celestial.add({
       type: 'raw',
@@ -131,7 +134,7 @@
         if (error) return console.error(error);
         const canvas = Celestial.context;
 
-        photoGeoJSON.features.forEach((feature: any) => {
+        currentFeatures.forEach((feature: any) => {
           const coords = feature.geometry.coordinates;
           const point = currentProjection(coords);
 
@@ -155,7 +158,7 @@
       redraw: () => {
         const canvas = Celestial.context;
 
-        photoGeoJSON.features.forEach((feature: any) => {
+        currentFeatures.forEach((feature: any) => {
           const coords = feature.geometry.coordinates;
           const point = currentProjection(coords);
 
@@ -231,6 +234,12 @@
       }
       prevCenterRA = centerRA;
     }
+  });
+
+  $effect(() => {
+    // Track photos prop — update mutable ref and redraw
+    currentFeatures = photosToGeoJSON(photos).features;
+    celestialInstance?.redraw();
   });
 </script>
 

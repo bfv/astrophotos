@@ -53,6 +53,8 @@ export type TranslationSet = {
     ra12hTooltip: string;
     photoMode: string;
     planningMode: string;
+    catalogMessier: string;
+    catalogPhotos: string;
   };
   planning: {
     noLocation: string;
@@ -113,6 +115,8 @@ export const translations: Record<Locale, TranslationSet> = {
       ra12hTooltip: 'Center on RA 12h',
       photoMode: 'Photo',
       planningMode: 'Planning',
+      catalogMessier: 'Messier',
+      catalogPhotos: 'My Photos',
     },
     planning: {
       noLocation: 'Set your observation location in Settings to see altitude data.',
@@ -171,6 +175,8 @@ export const translations: Record<Locale, TranslationSet> = {
       ra12hTooltip: 'Centreer op RA 12h',
       photoMode: "Foto's",
       planningMode: 'Planning',
+      catalogMessier: 'Messier',
+      catalogPhotos: "Mijn foto's",
     },
     planning: {
       noLocation: 'Stel je waarnemingslocatie in via Instellingen om hoogtedata te zien.',

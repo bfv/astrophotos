@@ -3,18 +3,24 @@ import type { Photo } from '$lib/types';
 import messierData from '$lib/data/messier.json';
 import photosData from '$lib/data/photos.json';
 
-// Internal store — default to Messier catalog for logged-out visitors
-const _photos = writable<Photo[]>(messierData as unknown as Photo[]);
+export type Catalog = 'messier' | 'photos';
 
-// Public read-only store
-export const photos = derived([_photos], ([$photos]) => $photos);
+// Single source of truth for which catalog is active
+export const currentCatalog = writable<Catalog>('messier');
+
+// Photos store derived from currentCatalog — always in sync
+export const photos = derived(currentCatalog, (catalog) =>
+  (catalog === 'photos' ? photosData : messierData) as unknown as Photo[]
+);
 
 export async function loadPhotos(token: string | null): Promise<void> {
-  // --- Phase 1: local data ---
-  // TODO: replace with fetch('/api/photos', { headers: { Authorization: `Bearer ${token}` } })
-  _photos.set(token ? photosData as unknown as Photo[] : messierData as unknown as Photo[]);
+  currentCatalog.set(token ? 'photos' : 'messier');
+}
+
+export function setCatalog(catalog: Catalog): void {
+  currentCatalog.set(catalog);
 }
 
 export function clearPhotos(): void {
-  _photos.set(messierData as unknown as Photo[]);
+  currentCatalog.set('messier');
 }

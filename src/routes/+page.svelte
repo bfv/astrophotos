@@ -5,8 +5,9 @@
 	import PlanningCard from '$lib/components/PlanningCard.svelte';
 	import BottomBar from '$lib/components/BottomBar.svelte';
 	import Toast from '$lib/components/Toast.svelte';
-	import { photos } from '$lib/photoService';
+	import { photos, setCatalog, currentCatalog, type Catalog } from '$lib/photoService';
 	import type { Photo } from '$lib/types';
+	import { isLoggedIn } from '$lib/auth';
 	import { browser } from '$app/environment';
 	import { onMount } from 'svelte';
 	import { goto } from '$app/navigation';
@@ -174,6 +175,11 @@
 	function handleClose() {
 		selectedPhoto = null;
 	}
+
+	// ── Catalog selector ────────────────────────────────────────────────────
+	function handleCatalogChange() {
+		setCatalog($currentCatalog);
+	}
 </script>
 
 <TopBar>
@@ -206,6 +212,12 @@
 		<span class="time-label">{timeLabel}</span>
 		<button class="time-step-btn" onclick={() => stepHour(1)} aria-label="Next hour">&#8250;</button>
 	</div>
+	<select class="catalog-select projection-select" bind:value={$currentCatalog} onchange={handleCatalogChange}>
+		<option value="messier">{$t.chart.catalogMessier}</option>
+		{#if $isLoggedIn}
+			<option value="photos">{$t.chart.catalogPhotos}</option>
+		{/if}
+	</select>
 	<select class="projection-select" value={projection} onchange={handleProjectionChange}>
 		{#each PROJECTIONS as proj}
 			<option value={proj.value}>{proj.label}</option>

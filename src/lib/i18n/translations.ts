@@ -46,6 +46,12 @@ export type TranslationSet = {
     loginFailed: (error: string) => string;
     backToHome: string;
   };
+  chart: {
+    today: string;
+    todayTooltip: string;
+    ra0hTooltip: string;
+    ra12hTooltip: string;
+  };
 };
 
 export const translations: Record<Locale, TranslationSet> = {
@@ -95,6 +101,12 @@ export const translations: Record<Locale, TranslationSet> = {
       loginFailed: (error) => `Login failed: ${error}`,
       backToHome: 'Back to home',
     },
+    chart: {
+      today: 'Today',
+      todayTooltip: "Centers on tonight's sky: the RA highest at midnight (or 1 AM in summer), adjusted for your timezone and location.",
+      ra0hTooltip: 'Center on RA 0h',
+      ra12hTooltip: 'Center on RA 12h',
+    },
   },
   nl: {
     user: {
@@ -141,6 +153,12 @@ export const translations: Record<Locale, TranslationSet> = {
       loggingIn: 'Inloggen\u2026',
       loginFailed: (error) => `Inloggen mislukt: ${error}`,
       backToHome: 'Terug naar home',
+    },
+    chart: {
+      today: 'Vandaag',
+      todayTooltip: 'Centreert op de hemel van vanavond: de RA die het hoogst staat om middernacht (of 01:00 in de zomer), aangepast voor je tijdzone en locatie.',
+      ra0hTooltip: 'Centreer op RA 0h',
+      ra12hTooltip: 'Centreer op RA 12h',
     },
   },
 };

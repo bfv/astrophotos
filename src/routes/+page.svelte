@@ -2,6 +2,7 @@
 	import TopBar from '$lib/components/TopBar.svelte';
 	import StarChart from '$lib/components/StarChart.svelte';
 	import InfoCard from '$lib/components/InfoCard.svelte';
+	import PlanningCard from '$lib/components/PlanningCard.svelte';
 	import BottomBar from '$lib/components/BottomBar.svelte';
 	import Toast from '$lib/components/Toast.svelte';
 	import { photos } from '$lib/photoService';
@@ -155,6 +156,16 @@
 	let clickPosition: { x: number; y: number } | null = $state(null);
 	let starChart: StarChart;
 
+	type AppMode = 'photo' | 'planning';
+	const storedAppMode = browser ? (localStorage.getItem('appMode') as AppMode | null) : null;
+	let appMode: AppMode = $state(storedAppMode ?? 'photo');
+
+	function handleAppModeChange(mode: AppMode) {
+		appMode = mode;
+		selectedPhoto = null;
+		if (browser) localStorage.setItem('appMode', mode);
+	}
+
 	function handleSelect(photo: Photo, position: { x: number; y: number }) {
 		selectedPhoto = photo;
 		clickPosition = position;
@@ -166,6 +177,16 @@
 </script>
 
 <TopBar>
+	<div class="app-mode-set">
+		<label class="ra-option" class:ra-active={appMode === 'photo'}>
+			<input type="radio" name="app-mode" value="photo" checked={appMode === 'photo'} onchange={() => handleAppModeChange('photo')} />
+			{$t.chart.photoMode}
+		</label>
+		<label class="ra-option" class:ra-active={appMode === 'planning'}>
+			<input type="radio" name="app-mode" value="planning" checked={appMode === 'planning'} onchange={() => handleAppModeChange('planning')} />
+			{$t.chart.planningMode}
+		</label>
+	</div>
 	<div class="center-ra-set">
 		<label class="ra-option" class:ra-active={centerRAMode === '0h'} title={$t.chart.ra0hTooltip}>
 			<input type="radio" name="center-ra" value="0h" checked={centerRAMode === '0h'} onchange={() => handleCenterRAChange('0h')} />
@@ -193,7 +214,11 @@
 	<button class="reset-btn" onclick={() => starChart.resetCenter()}>⌖ Reset</button>
 </TopBar>
 <StarChart bind:this={starChart} photos={$photos} {projection} {centerRA} onselect={handleSelect} />
-<InfoCard photo={selectedPhoto} position={clickPosition} onclose={handleClose} />
+{#if appMode === 'photo'}
+	<InfoCard photo={selectedPhoto} position={clickPosition} onclose={handleClose} />
+{:else}
+	<PlanningCard photo={selectedPhoto} position={clickPosition} onclose={handleClose} />
+{/if}
 <BottomBar photoCount={$photos.length} />
 {#if showLoggedOutToast}
 	<Toast message={$t.page.loggedOut} onhide={() => (showLoggedOutToast = false)} />
@@ -203,6 +228,12 @@
 	:global(.center-ra-set) {
 		display: flex;
 		border: 1px solid #555;
+		border-radius: 4px;
+		overflow: hidden;
+	}
+	:global(.app-mode-set) {
+		display: flex;
+		border: 1px solid #445;
 		border-radius: 4px;
 		overflow: hidden;
 	}

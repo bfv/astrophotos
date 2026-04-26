@@ -51,6 +51,11 @@ export type TranslationSet = {
     todayTooltip: string;
     ra0hTooltip: string;
     ra12hTooltip: string;
+    photoMode: string;
+    planningMode: string;
+  };
+  planning: {
+    noLocation: string;
   };
 };
 
@@ -106,6 +111,11 @@ export const translations: Record<Locale, TranslationSet> = {
       todayTooltip: "Centers on tonight's sky: the RA highest at midnight (or 1 AM in summer), adjusted for your timezone and location.",
       ra0hTooltip: 'Center on RA 0h',
       ra12hTooltip: 'Center on RA 12h',
+      photoMode: 'Photo',
+      planningMode: 'Planning',
+    },
+    planning: {
+      noLocation: 'Set your observation location in Settings to see altitude data.',
     },
   },
   nl: {
@@ -159,6 +169,11 @@ export const translations: Record<Locale, TranslationSet> = {
       todayTooltip: 'Centreert op de hemel van vanavond: de RA die het hoogst staat om middernacht (of 01:00 in de zomer), aangepast voor je tijdzone en locatie.',
       ra0hTooltip: 'Centreer op RA 0h',
       ra12hTooltip: 'Centreer op RA 12h',
+      photoMode: "Foto's",
+      planningMode: 'Planning',
+    },
+    planning: {
+      noLocation: 'Stel je waarnemingslocatie in via Instellingen om hoogtedata te zien.',
     },
   },
 };

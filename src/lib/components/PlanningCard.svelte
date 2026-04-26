@@ -70,12 +70,14 @@
       timeZone: tz, year: 'numeric', month: '2-digit', day: '2-digit',
     }).formatToParts(now);
     const getD = (type: string) => parseInt(dateParts.find((p) => p.type === type)!.value, 10);
-    return Date.UTC(getD('year'), getD('month') - 1, getD('day'), 0, 0, 0) - nowOffsetMins * 60000;
+    const thisMidnight = Date.UTC(getD('year'), getD('month') - 1, getD('day'), 0, 0, 0) - nowOffsetMins * 60000;
+    // If we're past noon, plan for tonight (next midnight); otherwise use last midnight
+    const hoursSince = (now.getTime() - thisMidnight) / 3_600_000;
+    return hoursSince > 12 ? thisMidnight + 86_400_000 : thisMidnight;
   }
 
   // ── Altitude formula ───────────────────────────────────────────────────────
-  function computeAlt(ra_deg: number, dec_deg: number, utcMs: number, lat: number, lon: number): number {
-
+  function computeAltAz(ra_deg: number, dec_deg: number, utcMs: number, lat: number, lon: number): { alt: number; az: number } {
     const J2000 = Date.UTC(2000, 0, 1, 12, 0, 0);
     const d = (utcMs - J2000) / 86_400_000;
     const gmstH = (((280.46061837 + 360.98564736629 * d) % 360) + 360) % 360 / 15;
@@ -84,7 +86,17 @@
     const lat_rad = lat * Math.PI / 180;
     const dec_rad = dec_deg * Math.PI / 180;
     const sinAlt = Math.sin(lat_rad) * Math.sin(dec_rad) + Math.cos(lat_rad) * Math.cos(dec_rad) * Math.cos(ha_rad);
-    return Math.asin(Math.max(-1, Math.min(1, sinAlt))) * 180 / Math.PI;
+    const alt = Math.asin(Math.max(-1, Math.min(1, sinAlt))) * 180 / Math.PI;
+    const az_rad = Math.atan2(
+      -Math.cos(dec_rad) * Math.sin(ha_rad),
+      Math.sin(dec_rad) * Math.cos(lat_rad) - Math.cos(dec_rad) * Math.cos(ha_rad) * Math.sin(lat_rad)
+    );
+    const az = ((az_rad * 180 / Math.PI) + 360) % 360;
+    return { alt, az };
+  }
+
+  function computeAlt(ra_deg: number, dec_deg: number, utcMs: number, lat: number, lon: number): number {
+    return computeAltAz(ra_deg, dec_deg, utcMs, lat, lon).alt;
   }
 
   // ── Sun position (low-precision, sufficient for twilight zones) ───────────
@@ -141,8 +153,16 @@
       const utcMs = midnightUTC + hourOffset * 3_600_000;
       const alt = computeAlt(photo.ra, photo.dec, utcMs, lat, lon);
       const clampedAlt = Math.max(ALT_MIN, Math.min(ALT_MAX, alt));
-      return { x: xOf(hourOffset), y: yOf(clampedAlt) };
+      return { x: xOf(hourOffset), y: yOf(clampedAlt), alt };
     });
+  });
+
+  // X of the highest-altitude point
+  const peakX = $derived.by(() => {
+    if (!altPoints) return null;
+    let best = altPoints[0];
+    for (const p of altPoints) if (p.alt > best.alt) best = p;
+    return best.x;
   });
 
   const altPolyline = $derived(
@@ -167,6 +187,13 @@
     label: String(((h + 24) % 24)).padStart(2, '0'),
   }));
 
+  // X position for the current time
+  const nowX = $derived.by(() => {
+    const hourOffset = (Date.now() - getMidnightUTCMs()) / 3_600_000;
+    const x = xOf(hourOffset);
+    return (x >= 0 && x <= GW) ? x : null;
+  });
+
   // ── Card positioning ───────────────────────────────────────────────────────
   let cardStyle = $derived.by(() => {
     if (!position) return '';
@@ -180,6 +207,44 @@
     if (top + CARD_H > vh - margin) top = vh - CARD_H - margin;
     return `left:${left}px;top:${top}px;`;
   });
+
+  // ── Hover time + altitude ─────────────────────────────────────────────────
+  let svgEl: SVGSVGElement | undefined = $state();
+  let hoverX: number | null = $state(null);
+
+  function onSvgMouseMove(e: MouseEvent) {
+    if (!svgEl) return;
+    // Convert CSS offsetX → SVG viewBox x coordinate
+    const svgX = e.offsetX * (GW + 26) / svgEl.clientWidth - 22;
+    hoverX = (svgX >= 0 && svgX <= GW) ? svgX : null;
+  }
+
+  function onSvgMouseLeave() {
+    hoverX = null;
+  }
+
+  // The active x: hover position, or peak altitude position when not hovering
+  const activeX = $derived(hoverX ?? peakX);
+
+  // ── Hover time + altitude ─────────────────────────────────────────────────
+  const hoverInfo = $derived.by(() => {
+    if (activeX === null || !photo) return null;
+    const lat = $settings.location?.lat;
+    const lon = $settings.location?.lon;
+    if (lat == null || lon == null) return null;
+
+    const hourOffset = (activeX / GW) * 24 - 12;
+    const midnightUTC = getMidnightUTCMs();
+    const utcMs = midnightUTC + hourOffset * 3_600_000;
+    const { alt, az } = computeAltAz(photo.ra, photo.dec, utcMs, lat, lon);
+
+    const tz = $settings.timezone ?? Intl.DateTimeFormat().resolvedOptions().timeZone;
+    const timeStr = new Intl.DateTimeFormat('en', {
+      timeZone: tz, hour: '2-digit', minute: '2-digit', hour12: false,
+    }).format(new Date(utcMs));
+
+    return { time: timeStr, alt: alt.toFixed(1), az: az.toFixed(1) };
+  });
 </script>
 
 {#if photo}
@@ -187,15 +252,25 @@
     <button class="plancard-close" onclick={onclose} aria-label={$t.info.close}>&times;</button>
     <div class="plancard-body">
       <h3 class="plancard-name">{photo.name}</h3>
-      <dl class="plancard-coords">
-        <dt>RA</dt><dd>{formatRA(photo.ra)}</dd>
-        <dt>Dec</dt><dd>{formatDec(photo.dec)}</dd>
-      </dl>
+      <div class="plancard-header-row">
+        <dl class="plancard-coords">
+          <dt>RA</dt><dd>{formatRA(photo.ra)}</dd>
+          <dt>Dec</dt><dd>{formatDec(photo.dec)}</dd>
+        </dl>
+        {#if hoverInfo}
+          <dl class="plancard-coords plancard-hover-coords">
+            <dt>{$t.planning.hoverTime}</dt><dd>{hoverInfo.time}</dd>
+            <dt>{$t.planning.hoverAlt}</dt><dd>{hoverInfo.alt}°</dd>
+            <dt>{$t.planning.hoverAz}</dt><dd>{hoverInfo.az}°</dd>
+          </dl>
+        {/if}
+      </div>
 
       {#if altPoints}
         <!-- SVG viewBox has 22px left for y-labels, 4px top, 4px right, 14px bottom for x-labels -->
         <div class="plancard-graph">
-          <svg viewBox="-22 -4 {GW + 26} {GH + 18}" width="100%" aria-hidden="true">
+          <svg bind:this={svgEl} viewBox="-22 -4 {GW + 26} {GH + 18}" width="100%" aria-hidden="true"
+               onmousemove={onSvgMouseMove} onmouseleave={onSvgMouseLeave}>
             <defs>
               <clipPath id="above-{photo.id}">
                 <rect x="0" y="0" width={GW} height={horizonY} />
@@ -221,6 +296,11 @@
             <!-- Midnight -->
             <line x1={midnightX} y1="0" x2={midnightX} y2={GH} stroke="#445566" stroke-width="1" stroke-dasharray="4,3" />
 
+            <!-- Now -->
+            {#if nowX !== null}
+              <line x1={nowX} y1="0" x2={nowX} y2={GH} stroke="#ffee44" stroke-width="1" stroke-dasharray="3,3" opacity="0.7" />
+            {/if}
+
             <!-- Altitude curve -->
             <polyline points={altPolyline} fill="none" stroke="#7799ff" stroke-width="1.5" stroke-linejoin="round" />
 
@@ -233,6 +313,11 @@
             {#each xTicks as tick}
               <text x={tick.x} y={GH + 12} text-anchor="middle" font-size="8" fill="#666">{tick.label}</text>
             {/each}
+
+            <!-- Hover/peak crosshair -->
+            {#if activeX !== null}
+              <line x1={activeX} y1="0" x2={activeX} y2={GH} stroke="#aabbff" stroke-width="1" stroke-dasharray="3,3" />
+            {/if}
           </svg>
         </div>
       {:else}
@@ -281,12 +366,26 @@
     padding-right: 20px;
   }
 
+  .plancard-header-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 12px;
+    margin: 0 0 10px;
+  }
+
   .plancard-coords {
     display: grid;
     grid-template-columns: auto 1fr;
     gap: 2px 8px;
-    margin: 0 0 10px;
+    margin: 0;
     font-size: 13px;
+  }
+  .plancard-hover-coords {
+    text-align: right;
+  }
+  .plancard-hover-coords dt {
+    text-align: right;
   }
   .plancard-coords dt {
     color: #888;

@@ -58,6 +58,9 @@ export type TranslationSet = {
   };
   planning: {
     noLocation: string;
+    hoverTime: string;
+    hoverAlt: string;
+    hoverAz: string;
   };
 };
 
@@ -120,6 +123,9 @@ export const translations: Record<Locale, TranslationSet> = {
     },
     planning: {
       noLocation: 'Set your observation location in Settings to see altitude data.',
+      hoverTime: 'Time',
+      hoverAlt: 'Alt',
+      hoverAz: 'Az',
     },
   },
   nl: {
@@ -180,6 +186,9 @@ export const translations: Record<Locale, TranslationSet> = {
     },
     planning: {
       noLocation: 'Stel je waarnemingslocatie in via Instellingen om hoogtedata te zien.',
+      hoverTime: 'Tijd',
+      hoverAlt: 'Hoogte',
+      hoverAz: 'Azimut',
     },
   },
 };

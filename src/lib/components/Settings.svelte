@@ -42,7 +42,7 @@
   const systemTzLabel = timezoneOptions.find((o) => o.tz === systemTimezone)?.label ?? systemTimezone;
 
   // Local draft — only committed on Save
-  let draftLanguage: Locale | '' = $state($settings.language ?? '');
+  let draftLanguage: Locale | '' = $state($settings.language ?? 'en');
   let draftLat: string = $state($settings.location?.lat?.toString() ?? '');
   let draftLon: string = $state($settings.location?.lon?.toString() ?? '');
   let draftAstrobinApiKey: string = $state($settings.astrobinApiKey ?? '');
@@ -137,7 +137,6 @@
     <!-- Language -->
     <label class="settings-label" for="setting-language">{$t.settings.language}</label>
     <select id="setting-language" class="settings-select" bind:value={draftLanguage}>
-      <option value="">{$t.settings.languageAuto}</option>
       <option value="en">English</option>
       <option value="nl">Nederlands</option>
     </select>

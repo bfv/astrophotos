@@ -1,4 +1,6 @@
 import type { Locale } from '$lib/i18n';
+import { get } from 'svelte/store';
+import { accessToken, apiBaseUrl } from '$lib/auth';
 
 export interface UserSettings {
   language: Locale | null; // null = auto-detect from token / browser
@@ -9,27 +11,66 @@ export interface UserSettings {
 }
 
 export interface SettingsService {
-  load(): UserSettings;
-  save(settings: UserSettings): void;
+  load(): Promise<UserSettings>;
+  save(settings: UserSettings): Promise<void>;
 }
 
-const STORAGE_KEY = 'user_settings';
+export const defaults: UserSettings = {
+  language: null,
+  location: null,
+  timezone: null,
+  astrobinApiKey: null,
+  astrometryApiKey: null,
+};
 
-const defaults: UserSettings = { language: null, location: null, timezone: null, astrobinApiKey: null, astrometryApiKey: null };
+function fromApi(raw: Record<string, unknown>): UserSettings {
+  return {
+    language: (raw['language'] as Locale) ?? null,
+    location:
+      raw['lat'] != null && raw['lon'] != null
+        ? { lat: raw['lat'] as number, lon: raw['lon'] as number }
+        : null,
+    timezone: (raw['timezone'] as string) ?? null,
+    astrobinApiKey: (raw['astrobin_api_key'] as string) ?? null,
+    astrometryApiKey: (raw['astrometry_api_key'] as string) ?? null,
+  };
+}
 
-const localStorageService: SettingsService = {
-  load() {
-    try {
-      const raw = localStorage.getItem(STORAGE_KEY);
-      return raw ? { ...defaults, ...JSON.parse(raw) } : { ...defaults };
-    } catch {
-      return { ...defaults };
-    }
+function toApi(s: UserSettings): Record<string, unknown> {
+  return {
+    language: s.language,
+    lat: s.location?.lat ?? null,
+    lon: s.location?.lon ?? null,
+    timezone: s.timezone,
+    astrobin_api_key: s.astrobinApiKey,
+    astrometry_api_key: s.astrometryApiKey,
+  };
+}
+
+const apiService: SettingsService = {
+  async load(): Promise<UserSettings> {
+    const token = get(accessToken);
+    if (!token) return { ...defaults };
+    const res = await fetch(`${apiBaseUrl}/api/settings`, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    if (!res.ok) throw new Error(`Failed to load settings: ${res.status}`);
+    return fromApi(await res.json());
   },
-  save(settings) {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(settings));
+
+  async save(s: UserSettings): Promise<void> {
+    const token = get(accessToken);
+    if (!token) return;
+    const res = await fetch(`${apiBaseUrl}/api/settings`, {
+      method: 'PUT',
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(toApi(s)),
+    });
+    if (!res.ok) throw new Error(`Failed to save settings: ${res.status}`);
   },
 };
 
-/** Swap this export to switch to a server-backed implementation. */
-export const settingsService: SettingsService = localStorageService;
+export const settingsService: SettingsService = apiService;

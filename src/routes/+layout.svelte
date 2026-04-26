@@ -2,6 +2,7 @@
 	import { onMount } from 'svelte';
 	import { initAuth, isLoggedIn, accessToken } from '$lib/auth';
 	import { loadPhotos, clearPhotos } from '$lib/photoService';
+	import { loadSettings } from '$lib/stores/settings';
 
 	let { children } = $props();
 
@@ -14,7 +15,7 @@
 					let token: string | null = null;
 					const t = accessToken.subscribe((v) => (token = v));
 					t();
-					await loadPhotos(token);
+					await Promise.all([loadPhotos(token), loadSettings()]);
 				} else {
 					clearPhotos();
 				}

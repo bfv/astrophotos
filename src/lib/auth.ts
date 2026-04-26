@@ -4,9 +4,11 @@ import { browser } from '$app/environment';
 
 declare global {
   interface Window {
-    __APP_CONFIG__: { authAuthority: string; authClientId: string };
+    __APP_CONFIG__: { authAuthority: string; authClientId: string; apiBaseUrl: string };
   }
 }
+
+export const apiBaseUrl = browser ? window.__APP_CONFIG__.apiBaseUrl : '';
 
 const config = {
   authority: browser ? window.__APP_CONFIG__.authAuthority : '',

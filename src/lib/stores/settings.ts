@@ -1,14 +1,30 @@
 import { writable } from 'svelte/store';
 import { browser } from '$app/environment';
-import { settingsService, type UserSettings } from '$lib/settingsService';
+import { settingsService, defaults, type UserSettings } from '$lib/settingsService';
 
-const initial: UserSettings = browser
-  ? settingsService.load()
-  : { language: null, location: null };
+export const settings = writable<UserSettings>({ ...defaults });
 
-export const settings = writable<UserSettings>(initial);
+// Suppress auto-save during initial load and on the first (immediate) subscriber call.
+let _loading = false;
+let _initialized = false;
 
-// Persist every change automatically
+// Persist every change to the backend automatically, but not during initial load.
 settings.subscribe((val) => {
-  if (browser) settingsService.save(val);
+  if (!_initialized) { _initialized = true; return; }
+  if (browser && !_loading) {
+    settingsService.save(val).catch(() => {/* ignore — no token yet or network error */});
+  }
 });
+
+export async function loadSettings(): Promise<void> {
+  if (!browser) return;
+  _loading = true;
+  try {
+    const loaded = await settingsService.load();
+    settings.set(loaded);
+  } catch {
+    // keep defaults
+  } finally {
+    _loading = false;
+  }
+}

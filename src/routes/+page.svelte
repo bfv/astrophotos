@@ -26,12 +26,13 @@
 
 	const PROJECTIONS = [
 		{ value: 'equirectangular', label: 'Equirectangular' },
-		{ value: 'aitoff', label: 'Aitoff' },
-		{ value: 'mollweide', label: 'Mollweide' },
-		{ value: 'hammer', label: 'Hammer' },
+//    { value: 'azitmuthalEquidistant', label: 'Azimuthal Equidistant' },
+//		{ value: 'aitoff', label: 'Aitoff' },
+//		{ value: 'mollweide', label: 'Mollweide' },
+//		{ value: 'hammer', label: 'Hammer' },
 		{ value: 'stereographic', label: 'Stereographic' },
 		{ value: 'orthographic', label: 'Orthographic' },
-		{ value: 'mercator', label: 'Mercator' }
+//		{ value: 'mercator', label: 'Mercator' }
 	];
 
 	const storedProjection = browser ? localStorage.getItem('projection') : null;

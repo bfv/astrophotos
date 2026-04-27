@@ -363,7 +363,7 @@
     <button class="plancard-close" onclick={onclose} aria-label={$t.info.close}>&times;</button>
     <div class="plancard-body">
       <div class="plancard-title-row">
-        <h3 class="plancard-name">{photo.name}</h3>
+        <h3 class="plancard-name">{photo.designation}</h3>
         <div class="graph-mode-set">
           <label class="gm-option" class:gm-active={graphMode === 'daily'}>
             <input type="radio" name="graph-mode-{photo.id}" value="daily" bind:group={graphMode} />

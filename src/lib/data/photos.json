@@ -6,7 +6,7 @@
     "dec": 40.32373932257645,
     "fov": 0,
     "rotation": 0,
-    "thumbnail": null,
+    "thumbnailUrl": null,
     "fullSizeUrl": null,
     "metadata": {
       "date": null,
@@ -21,7 +21,7 @@
     "dec": 57.69540806869528,
     "fov": 0,
     "rotation": 0,
-    "thumbnail": null,
+    "thumbnailUrl": null,
     "fullSizeUrl": null,
     "metadata": {
       "date": null,
@@ -36,7 +36,7 @@
     "dec": 61.451670275314214,
     "fov": 0,
     "rotation": 0,
-    "thumbnail": null,
+    "thumbnailUrl": null,
     "fullSizeUrl": null,
     "metadata": {
       "date": null,
@@ -51,7 +51,7 @@
     "dec": 60.546551793808746,
     "fov": 0,
     "rotation": 0,
-    "thumbnail": null,
+    "thumbnailUrl": null,
     "fullSizeUrl": null,
     "metadata": {
       "date": null,
@@ -66,7 +66,7 @@
     "dec": 68.08383332559713,
     "fov": 0,
     "rotation": 0,
-    "thumbnail": null,
+    "thumbnailUrl": null,
     "fullSizeUrl": null,
     "metadata": {
       "date": null,
@@ -81,7 +81,7 @@
     "dec": 34.319744444444446,
     "fov": 0,
     "rotation": 0,
-    "thumbnail": null,
+    "thumbnailUrl": null,
     "fullSizeUrl": null,
     "metadata": {
       "date": null,
@@ -96,7 +96,7 @@
     "dec": -2.1584073443702865,
     "fov": 0,
     "rotation": 0,
-    "thumbnail": null,
+    "thumbnailUrl": null,
     "fullSizeUrl": null,
     "metadata": {
       "date": null,
@@ -111,7 +111,7 @@
     "dec": 22.48151034489243,
     "fov": 0,
     "rotation": 0,
-    "thumbnail": null,
+    "thumbnailUrl": null,
     "fullSizeUrl": null,
     "metadata": {
       "date": null,
@@ -126,7 +126,7 @@
     "dec": 42.536389679335436,
     "fov": 0,
     "rotation": 0,
-    "thumbnail": null,
+    "thumbnailUrl": null,
     "fullSizeUrl": null,
     "metadata": {
       "date": null,
@@ -141,7 +141,7 @@
     "dec": 44.484870588235296,
     "fov": 0,
     "rotation": 0,
-    "thumbnail": null,
+    "thumbnailUrl": null,
     "fullSizeUrl": null,
     "metadata": {
       "date": null,
@@ -156,7 +156,7 @@
     "dec": 47.395318232044204,
     "fov": 0,
     "rotation": 0,
-    "thumbnail": null,
+    "thumbnailUrl": null,
     "fullSizeUrl": null,
     "metadata": {
       "date": null,
@@ -171,7 +171,7 @@
     "dec": 53.425487345951915,
     "fov": 0,
     "rotation": 0,
-    "thumbnail": null,
+    "thumbnailUrl": null,
     "fullSizeUrl": null,
     "metadata": {
       "date": null,
@@ -186,7 +186,7 @@
     "dec": 13.137305833333333,
     "fov": 0,
     "rotation": 0,
-    "thumbnail": null,
+    "thumbnailUrl": null,
     "fullSizeUrl": null,
     "metadata": {
       "date": null,
@@ -201,7 +201,7 @@
     "dec": 22.05957844926762,
     "fov": 0,
     "rotation": 0,
-    "thumbnail": null,
+    "thumbnailUrl": null,
     "fullSizeUrl": null,
     "metadata": {
       "date": null,
@@ -216,7 +216,7 @@
     "dec": 54.46212184363378,
     "fov": 0,
     "rotation": 0,
-    "thumbnail": null,
+    "thumbnailUrl": null,
     "fullSizeUrl": null,
     "metadata": {
       "date": null,
@@ -231,7 +231,7 @@
     "dec": 47.344904209251055,
     "fov": 0,
     "rotation": 0,
-    "thumbnail": null,
+    "thumbnailUrl": null,
     "fullSizeUrl": null,
     "metadata": {
       "date": null,
@@ -246,7 +246,7 @@
     "dec": 55.674381720167595,
     "fov": 0,
     "rotation": 0,
-    "thumbnail": null,
+    "thumbnailUrl": null,
     "fullSizeUrl": null,
     "metadata": {
       "date": null,
@@ -261,7 +261,7 @@
     "dec": 36.451090661099585,
     "fov": 0,
     "rotation": 0,
-    "thumbnail": null,
+    "thumbnailUrl": null,
     "fullSizeUrl": null,
     "metadata": {
       "date": null,
@@ -276,7 +276,7 @@
     "dec": 28.337159389224336,
     "fov": 0,
     "rotation": 0,
-    "thumbnail": null,
+    "thumbnailUrl": null,
     "fullSizeUrl": null,
     "metadata": {
       "date": null,
@@ -291,7 +291,7 @@
     "dec": 41.287683000200815,
     "fov": 0,
     "rotation": 0,
-    "thumbnail": null,
+    "thumbnailUrl": null,
     "fullSizeUrl": null,
     "metadata": {
       "date": null,
@@ -306,7 +306,7 @@
     "dec": 30.71518537491688,
     "fov": 0,
     "rotation": 0,
-    "thumbnail": null,
+    "thumbnailUrl": null,
     "fullSizeUrl": null,
     "metadata": {
       "date": null,
@@ -321,7 +321,7 @@
     "dec": 48.58826333333333,
     "fov": 0,
     "rotation": 0,
-    "thumbnail": null,
+    "thumbnailUrl": null,
     "fullSizeUrl": null,
     "metadata": {
       "date": null,
@@ -336,7 +336,7 @@
     "dec": -5.372864653465346,
     "fov": 0,
     "rotation": 0,
-    "thumbnail": null,
+    "thumbnailUrl": null,
     "fullSizeUrl": null,
     "metadata": {
       "date": null,
@@ -351,7 +351,7 @@
     "dec": 24.231270588235294,
     "fov": 0,
     "rotation": 0,
-    "thumbnail": null,
+    "thumbnailUrl": null,
     "fullSizeUrl": null,
     "metadata": {
       "date": null,
@@ -366,7 +366,7 @@
     "dec": 47.14513496948429,
     "fov": 0,
     "rotation": 0,
-    "thumbnail": null,
+    "thumbnailUrl": null,
     "fullSizeUrl": null,
     "metadata": {
       "date": null,
@@ -381,7 +381,7 @@
     "dec": 18.180068502874136,
     "fov": 0,
     "rotation": 0,
-    "thumbnail": null,
+    "thumbnailUrl": null,
     "fullSizeUrl": null,
     "metadata": {
       "date": null,
@@ -396,7 +396,7 @@
     "dec": 30.242576666666665,
     "fov": 0,
     "rotation": 0,
-    "thumbnail": null,
+    "thumbnailUrl": null,
     "fullSizeUrl": null,
     "metadata": {
       "date": null,
@@ -411,7 +411,7 @@
     "dec": 33.0351775,
     "fov": 0,
     "rotation": 0,
-    "thumbnail": null,
+    "thumbnailUrl": null,
     "fullSizeUrl": null,
     "metadata": {
       "date": null,
@@ -426,7 +426,7 @@
     "dec": 42.02700356366868,
     "fov": 0,
     "rotation": 0,
-    "thumbnail": null,
+    "thumbnailUrl": null,
     "fullSizeUrl": null,
     "metadata": {
       "date": null,
@@ -441,7 +441,7 @@
     "dec": 69.14762073618407,
     "fov": 0,
     "rotation": 0,
-    "thumbnail": null,
+    "thumbnailUrl": null,
     "fullSizeUrl": null,
     "metadata": {
       "date": null,
@@ -456,7 +456,7 @@
     "dec": 43.30516279069768,
     "fov": 0,
     "rotation": 0,
-    "thumbnail": null,
+    "thumbnailUrl": null,
     "fullSizeUrl": null,
     "metadata": {
       "date": null,
@@ -471,7 +471,7 @@
     "dec": 41.122547651052045,
     "fov": 0,
     "rotation": 0,
-    "thumbnail": null,
+    "thumbnailUrl": null,
     "fullSizeUrl": null,
     "metadata": {
       "date": null,
@@ -486,7 +486,7 @@
     "dec": 55.02085878601585,
     "fov": 0,
     "rotation": 0,
-    "thumbnail": null,
+    "thumbnailUrl": null,
     "fullSizeUrl": null,
     "metadata": {
       "date": null,
@@ -501,7 +501,7 @@
     "dec": 12.894541666666667,
     "fov": 0,
     "rotation": 0,
-    "thumbnail": null,
+    "thumbnailUrl": null,
     "fullSizeUrl": null,
     "metadata": {
       "date": null,
@@ -516,7 +516,7 @@
     "dec": 33.439918181818186,
     "fov": 0,
     "rotation": 0,
-    "thumbnail": null,
+    "thumbnailUrl": null,
     "fullSizeUrl": null,
     "metadata": {
       "date": null,
@@ -531,7 +531,7 @@
     "dec": 4.823672666666667,
     "fov": 0,
     "rotation": 0,
-    "thumbnail": null,
+    "thumbnailUrl": null,
     "fullSizeUrl": null,
     "metadata": {
       "date": null,
@@ -546,7 +546,7 @@
     "dec": 23.36795947669128,
     "fov": 0,
     "rotation": 0,
-    "thumbnail": null,
+    "thumbnailUrl": null,
     "fullSizeUrl": null,
     "metadata": {
       "date": null,
@@ -561,7 +561,7 @@
     "dec": 65.51888,
     "fov": 0,
     "rotation": 0,
-    "thumbnail": null,
+    "thumbnailUrl": null,
     "fullSizeUrl": null,
     "metadata": {
       "date": null,
@@ -576,7 +576,7 @@
     "dec": 56.6098370845451,
     "fov": 0,
     "rotation": 0,
-    "thumbnail": null,
+    "thumbnailUrl": null,
     "fullSizeUrl": null,
     "metadata": {
       "date": null,
@@ -591,7 +591,7 @@
     "dec": 21.493737507389216,
     "fov": 0,
     "rotation": 0,
-    "thumbnail": null,
+    "thumbnailUrl": null,
     "fullSizeUrl": null,
     "metadata": {
       "date": null,
@@ -606,7 +606,7 @@
     "dec": 29.724170329335927,
     "fov": 0,
     "rotation": 0,
-    "thumbnail": null,
+    "thumbnailUrl": null,
     "fullSizeUrl": null,
     "metadata": {
       "date": null,
@@ -621,7 +621,7 @@
     "dec": 25.99933668944859,
     "fov": 0,
     "rotation": 0,
-    "thumbnail": null,
+    "thumbnailUrl": null,
     "fullSizeUrl": null,
     "metadata": {
       "date": null,
@@ -636,7 +636,7 @@
     "dec": 27.99627792717638,
     "fov": 0,
     "rotation": 0,
-    "thumbnail": null,
+    "thumbnailUrl": null,
     "fullSizeUrl": null,
     "metadata": {
       "date": null,
@@ -651,7 +651,7 @@
     "dec": 36.572734,
     "fov": 0,
     "rotation": 0,
-    "thumbnail": null,
+    "thumbnailUrl": null,
     "fullSizeUrl": null,
     "metadata": {
       "date": null,
@@ -666,7 +666,7 @@
     "dec": 66.65193700993798,
     "fov": 0,
     "rotation": 0,
-    "thumbnail": null,
+    "thumbnailUrl": null,
     "fullSizeUrl": null,
     "metadata": {
       "date": null,
@@ -681,7 +681,7 @@
     "dec": 37.748663227325906,
     "fov": 0,
     "rotation": 0,
-    "thumbnail": null,
+    "thumbnailUrl": null,
     "fullSizeUrl": null,
     "metadata": {
       "date": null,
@@ -696,7 +696,7 @@
     "dec": 38.557566296988156,
     "fov": 0,
     "rotation": 0,
-    "thumbnail": null,
+    "thumbnailUrl": null,
     "fullSizeUrl": null,
     "metadata": {
       "date": null,
@@ -711,7 +711,7 @@
     "dec": 60.43118254545454,
     "fov": 0,
     "rotation": 0,
-    "thumbnail": null,
+    "thumbnailUrl": null,
     "fullSizeUrl": null,
     "metadata": {
       "date": null,
@@ -726,7 +726,7 @@
     "dec": 60.25979009951112,
     "fov": 0,
     "rotation": 0,
-    "thumbnail": null,
+    "thumbnailUrl": null,
     "fullSizeUrl": null,
     "metadata": {
       "date": null,
@@ -741,7 +741,7 @@
     "dec": 31.505609375000002,
     "fov": 0,
     "rotation": 0,
-    "thumbnail": null,
+    "thumbnailUrl": null,
     "fullSizeUrl": null,
     "metadata": {
       "date": null,
@@ -756,7 +756,7 @@
     "dec": 31.50690416666667,
     "fov": 0,
     "rotation": 0,
-    "thumbnail": null,
+    "thumbnailUrl": null,
     "fullSizeUrl": null,
     "metadata": {
       "date": null,
@@ -771,7 +771,7 @@
     "dec": 43.88369375,
     "fov": 0,
     "rotation": 0,
-    "thumbnail": null,
+    "thumbnailUrl": null,
     "fullSizeUrl": null,
     "metadata": {
       "date": null,
@@ -786,7 +786,7 @@
     "dec": 68.2296398352607,
     "fov": 0,
     "rotation": 0,
-    "thumbnail": null,
+    "thumbnailUrl": null,
     "fullSizeUrl": null,
     "metadata": {
       "date": null,
@@ -801,7 +801,7 @@
     "dec": 61.20025798778029,
     "fov": 0,
     "rotation": 0,
-    "thumbnail": null,
+    "thumbnailUrl": null,
     "fullSizeUrl": null,
     "metadata": {
       "date": null,
@@ -816,7 +816,7 @@
     "dec": 40.859106965195174,
     "fov": 0,
     "rotation": 0,
-    "thumbnail": null,
+    "thumbnailUrl": null,
     "fullSizeUrl": null,
     "metadata": {
       "date": null,
@@ -831,7 +831,7 @@
     "dec": 67.21146310181166,
     "fov": 0,
     "rotation": 0,
-    "thumbnail": null,
+    "thumbnailUrl": null,
     "fullSizeUrl": null,
     "metadata": {
       "date": null,
@@ -846,7 +846,7 @@
     "dec": 42.3711822056237,
     "fov": 0,
     "rotation": 0,
-    "thumbnail": null,
+    "thumbnailUrl": null,
     "fullSizeUrl": null,
     "metadata": {
       "date": null,
@@ -861,7 +861,7 @@
     "dec": 35.332227459762905,
     "fov": 0,
     "rotation": 0,
-    "thumbnail": null,
+    "thumbnailUrl": null,
     "fullSizeUrl": null,
     "metadata": {
       "date": null,
@@ -876,7 +876,7 @@
     "dec": 62.48138348834568,
     "fov": 0,
     "rotation": 0,
-    "thumbnail": null,
+    "thumbnailUrl": null,
     "fullSizeUrl": null,
     "metadata": {
       "date": null,
@@ -891,7 +891,7 @@
     "dec": 59.72511748621794,
     "fov": 0,
     "rotation": 0,
-    "thumbnail": null,
+    "thumbnailUrl": null,
     "fullSizeUrl": null,
     "metadata": {
       "date": null,
@@ -906,7 +906,7 @@
     "dec": 33.9710092490812,
     "fov": 0,
     "rotation": 0,
-    "thumbnail": null,
+    "thumbnailUrl": null,
     "fullSizeUrl": null,
     "metadata": {
       "date": null,
@@ -921,7 +921,7 @@
     "dec": 25.924049493939634,
     "fov": 0,
     "rotation": 0,
-    "thumbnail": null,
+    "thumbnailUrl": null,
     "fullSizeUrl": null,
     "metadata": {
       "date": null,
@@ -936,7 +936,7 @@
     "dec": 31.552976334001055,
     "fov": 0,
     "rotation": 0,
-    "thumbnail": null,
+    "thumbnailUrl": null,
     "fullSizeUrl": null,
     "metadata": {
       "date": null,
@@ -951,7 +951,7 @@
     "dec": 61.16359494211969,
     "fov": 0,
     "rotation": 0,
-    "thumbnail": null,
+    "thumbnailUrl": null,
     "fullSizeUrl": null,
     "metadata": {
       "date": null,
@@ -966,7 +966,7 @@
     "dec": 62.513175373570334,
     "fov": 0,
     "rotation": 0,
-    "thumbnail": null,
+    "thumbnailUrl": null,
     "fullSizeUrl": null,
     "metadata": {
       "date": null,
@@ -981,7 +981,7 @@
     "dec": 62.38471553262516,
     "fov": 0,
     "rotation": 0,
-    "thumbnail": null,
+    "thumbnailUrl": null,
     "fullSizeUrl": null,
     "metadata": {
       "date": null,
@@ -996,7 +996,7 @@
     "dec": 54.95167807330477,
     "fov": 0,
     "rotation": 0,
-    "thumbnail": null,
+    "thumbnailUrl": null,
     "fullSizeUrl": null,
     "metadata": {
       "date": null,
@@ -1011,7 +1011,7 @@
     "dec": 56.3325000,
     "fov": 0,
     "rotation": 0,
-    "thumbnail": null,
+    "thumbnailUrl": null,
     "fullSizeUrl": null,
     "metadata": {
       "date": null,

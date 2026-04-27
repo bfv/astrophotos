@@ -7,12 +7,12 @@ export interface PhotoMetadata {
 
 export interface Photo {
   id: string;
-  name: string;
+  designation: string;
   ra: number;
   dec: number;
   fov?: number;
   rotation?: number;
-  thumbnail?: string | null;
+  thumbnailUrl?: string | null;
   fullSizeUrl?: string | null;
   metadata?: PhotoMetadata;
 }

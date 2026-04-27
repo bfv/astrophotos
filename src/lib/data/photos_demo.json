@@ -6,7 +6,7 @@
     "dec": 41.2687,
     "fov": 3.0,
     "rotation": 0,
-    "thumbnail": null,
+    "thumbnailUrl": null,
     "fullSizeUrl": null,
     "metadata": {
       "date": "2024-10-15",
@@ -21,7 +21,7 @@
     "dec": -5.3911,
     "fov": 1.5,
     "rotation": 0,
-    "thumbnail": null,
+    "thumbnailUrl": null,
     "fullSizeUrl": null,
     "metadata": {
       "date": "2024-12-22",
@@ -36,7 +36,7 @@
     "dec": 24.1136,
     "fov": 2.0,
     "rotation": 0,
-    "thumbnail": null,
+    "thumbnailUrl": null,
     "fullSizeUrl": null,
     "metadata": {
       "date": "2024-11-10",
@@ -51,7 +51,7 @@
     "dec": 44.3654,
     "fov": 4.0,
     "rotation": 0,
-    "thumbnail": null,
+    "thumbnailUrl": null,
     "fullSizeUrl": null,
     "metadata": {
       "date": "2025-08-20",

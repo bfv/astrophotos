@@ -34,7 +34,7 @@
         },
         properties: {
           name: p.id,
-          desig: p.name,
+          desig: p.designation,
           mag: 0,
           dim: p.fov ?? 1
         }
